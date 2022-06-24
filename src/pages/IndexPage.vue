@@ -66,6 +66,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { api } from "boot/axios";
+import { useQuasar } from "quasar";
 
 const columns = [
   {
@@ -129,6 +130,7 @@ export default defineComponent({
   setup() {
     const rows = ref([]);
     const clientes = ref(null);
+    const $q = useQuasar();
 
     const loadData = () => {
       api
@@ -139,11 +141,19 @@ export default defineComponent({
           },
         })
         .then((response) => {
+          $q.notify({
+            type: "positive",
+            message: "Conexion establecida con backend.",
+          });
           clientes.value = response.data;
           rows.value = clientes.value;
         })
         .catch((error) => {
           console.log(error);
+          $q.notify({
+            type: "negative",
+            message: "Error al conectar con backend",
+          });
         });
     };
 

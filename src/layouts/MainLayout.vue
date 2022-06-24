@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr lff">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -13,13 +13,23 @@
 
         <q-toolbar-title> Sistema OTMaster </q-toolbar-title>
 
-        <!-- <div>Quasar v{{ $q.version }}</div> -->
+        <q-chip color="orange" text-color="white" icon="person"
+          >Nombre Usuario</q-chip
+        >
+        <q-btn flat round dense icon="logout" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      :mini="miniState"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
+    >
+      <q-list padding>
+        <!-- <q-item-label header> Essential Links </q-item-label> -->
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -41,46 +51,40 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
+    title: "Ticket",
+    caption: "",
+    icon: "confirmation_number",
+    link: "https://github.com/quasarframework",
+  },
+  {
+    title: "Clientes",
+    caption: "",
+    icon: "group",
+    link: "https://chat.quasar.dev",
+  },
+  {
+    title: "Colaboradores",
+    caption: "",
+    icon: "support_agent",
+    link: "https://twitter.quasar.dev",
+  },
+  {
+    title: "Dispositivos",
+    caption: "",
+    icon: "devices_other",
+    link: "https://forum.quasar.dev",
+  },
+  {
+    title: "Repuestos",
+    caption: "",
+    icon: "build_circle",
+    link: "https://twitter.quasar.dev",
+  },
+  {
     title: "Docs",
     caption: "quasar.dev",
     icon: "school",
     link: "https://quasar.dev",
-  },
-  {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
-  },
-  {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
   },
 ];
 
@@ -95,6 +99,7 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
 
     return {
+      miniState: ref(true),
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer() {
