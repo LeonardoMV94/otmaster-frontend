@@ -40,6 +40,7 @@
             size="lg"
             class="full-width"
             label="Entrar"
+            @click="verify"
           />
         </q-card-actions>
       </q-card>
@@ -49,6 +50,7 @@
 
 <script>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   name: "LoginPage",
@@ -58,8 +60,17 @@ export default {
       password: "",
     });
 
+    const router = useRouter();
+
     return {
       userForm,
+      verify: async () => {
+        if (userForm.value.rut == "123") {
+          console.log(true);
+          //si accede redirecciona a home
+          router.push({ name: "home" });
+        }
+      },
     };
   },
 };
