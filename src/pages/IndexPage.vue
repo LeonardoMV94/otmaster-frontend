@@ -21,12 +21,12 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+// import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "IndexPage",
   setup() {
-    const $q = useQuasar();
+    // const $q = useQuasar();
     const clientes = ref(null);
 
     const loadData = () => {
@@ -41,13 +41,8 @@ export default defineComponent({
           clientes.value = response.data;
           console.log(response.data);
         })
-        .catch(() => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: "Loading failed",
-            icon: "report_problem",
-          });
+        .catch((error) => {
+          console.log(error);
         });
     };
 
