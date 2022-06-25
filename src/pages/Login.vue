@@ -3,6 +3,8 @@
     <div class="row justify-center">
       <h5 class="text-h4 text-white q-my-md">Iniciar Sesión</h5>
     </div>
+
+    <!-- Primer commit de Lucas-->
     <div class="row">
       <q-card square bordered class="q-pa-xl shadow-1">
         <q-card-section>
