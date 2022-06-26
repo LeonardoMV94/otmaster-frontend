@@ -53,13 +53,13 @@ const linksList = [
   {
     title: "Ticket",
     caption: "",
-    icon: "confirmation_number",
+    icon: "home_repair_service",
     link: "https://github.com/quasarframework",
   },
   {
     title: "Clientes",
     caption: "",
-    icon: "group",
+    icon: "groups",
     link: "https://chat.quasar.dev",
   },
   {
@@ -71,7 +71,7 @@ const linksList = [
   {
     title: "Dispositivos",
     caption: "",
-    icon: "devices_other",
+    icon: "devices",
     link: "https://forum.quasar.dev",
   },
   {

@@ -10,7 +10,7 @@ const routes = [
       },
       {
         path: "clientes",
-        component: () => import("pages/IndexPage.vue"),
+        component: () => import("pages/ .vue"),
       },
     ],
   },
