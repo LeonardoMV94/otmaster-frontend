@@ -54,13 +54,13 @@ const linksList = [
     title: "Ticket",
     caption: "",
     icon: "confirmation_number",
-    link: "https://github.com/quasarframework",
+    link: { name: "clientes" },
   },
   {
     title: "Clientes",
     caption: "",
     icon: "group",
-    link: "https://chat.quasar.dev",
+    link: "clientes",
   },
   {
     title: "Colaboradores",

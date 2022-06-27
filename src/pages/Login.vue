@@ -59,7 +59,7 @@ export default {
       rut: "",
       password: "",
     });
-
+    //leo
     const router = useRouter();
 
     return {
