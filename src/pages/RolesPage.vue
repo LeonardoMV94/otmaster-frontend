@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "ColaboradoresPage",
+  name: "RolesPage",
   setup() {
     return {};
   },

@@ -137,7 +137,7 @@ export default defineComponent({
         .get("/clientes", {
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExMjIyMzM4LCJyb2xlIjoxLCJpYXQiOjE2NTU4Mjk1OTh9.7yf8gREybtZ_-G7hovkEHAoC6AXh29JlyvRpRPVmSyk",
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE4MjIyMzM5LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTYyODQ5NTh9.F4NZsaqkGxQeU4kqWgzsXtQVk4X1AfRtQRz4F-WbvUI",
           },
         })
         .then((response) => {
