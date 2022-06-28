@@ -1,12 +1,12 @@
 <template>
-  <div class="column">
+  <div class="column col-md-6 col-sm-6">
     <div class="row justify-center">
       <h5 class="text-h4 text-white q-my-md">Iniciar Sesión</h5>
     </div>
-    <div class="row">
+    <div class="col-6">
       <q-card square bordered class="q-pa-xl shadow-1">
         <q-card-section>
-          <q-form class="q-gutter-lg">
+          <q-form class="">
             <q-input
               v-model="userForm.rut"
               square
@@ -14,6 +14,11 @@
               clearable
               type="text"
               label="Rut Colaborador"
+              lazy-rules
+              :rules="[
+                (val) => val.length > 0 || 'Este campo es obligatorio',
+                (val) => isValidRut(val),
+              ]"
             >
               <template #before>
                 <q-icon name="person" />
@@ -26,6 +31,12 @@
               clearable
               type="password"
               label="Contraseña"
+              lazy-rules
+              :rules="[
+                (val) => val.length > 0 || 'Este campo es obligatorio',
+                (val) =>
+                  val.length > 7 || 'Debe tener como minimo 8 carácteres',
+              ]"
             >
               <template #before>
                 <q-icon name="key" />
@@ -51,6 +62,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { validate } from "rut.js";
 
 export default {
   name: "LoginPage",
@@ -70,6 +82,9 @@ export default {
           //si accede redirecciona a home
           router.push({ name: "home" });
         }
+      },
+      isValidRut: (val) => {
+        return validate(val) || "Rut no valido";
       },
     };
   },
