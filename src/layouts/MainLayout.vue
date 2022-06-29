@@ -71,7 +71,7 @@ const linksList = [
   {
     title: "Roles",
     caption: "",
-    icon: "support_agent",
+    icon: "admin_panel_settings",
     link: "roles",
   },
   {
@@ -83,13 +83,13 @@ const linksList = [
   {
     title: "Tipos de Dispositivos",
     caption: "",
-    icon: "devices",
+    icon: "phone_android",
     link: "tipos-dispositivos",
   },
   {
     title: "Marcas de Dispositivos",
     caption: "",
-    icon: "devices",
+    icon: "star",
     link: "marcas-dispositivos",
   },
   {

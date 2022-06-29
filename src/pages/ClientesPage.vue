@@ -12,7 +12,7 @@
               color="grey-3"
               label-color="primary"
               outlined
-              label="ID Cliente"
+              label="ID"
               mask="########"
               fill-mask
             >
@@ -75,8 +75,9 @@
               type="email"
               label-color="primary"
               outlined
-              fill-mask
               label="E-mail"
+              mask="##########"
+              fill-mask
             >
               <template #append>
                 <q-icon name="event" color="black" />
@@ -109,6 +110,8 @@
 
   <!--Aca empieza la Q-table-->
   <div class="q-pa-lg" style="max-width: 1400px">
+    <h4 class="text-center">Agregar un Cliente</h4>
+
     <q-table
       title="Clientes"
       :rows="rows"
@@ -214,6 +217,16 @@ export default {
   name: "ClientesPage",
 
   setup() {
+    //aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)
+
+    const idCliente = ref(null);
+    const nombreCliente = ref(null);
+    const apPatCliente = ref(null);
+    const apMatCliente = ref(null);
+    const correoCliente = ref(null);
+    const telCliente = ref(null);
+
+    //configuracion de qtable
     const loading = ref(false);
     const filter = ref("");
     const rowCount = ref(10);
@@ -225,6 +238,12 @@ export default {
       loading,
       filter,
       rowCount,
+      idCliente,
+      nombreCliente,
+      apPatCliente,
+      apMatCliente,
+      correoCliente,
+      telCliente,
 
       // emulate fetching data from server
       addRow() {
