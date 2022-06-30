@@ -86,7 +86,6 @@ export default {
           $q.notify({ type: "negative", message: message });
         } else {
           $q.notify({ type: "positive", message: message });
-          console.log("entra a home", router);
           router.push({ name: "home" });
         }
       },

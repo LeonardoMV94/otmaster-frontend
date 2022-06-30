@@ -3,5 +3,5 @@ export const currentState = (state) => {
 };
 
 export const username = (state) => {
-  return state.user;
+  return state.user?.rut_colaborador || "Usuario";
 };

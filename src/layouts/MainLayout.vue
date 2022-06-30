@@ -14,7 +14,7 @@
         <q-toolbar-title> Sistema OTMaster </q-toolbar-title>
 
         <q-chip color="orange" text-color="white" icon="person">
-          {{ authStatus }}
+          {{ username }}
         </q-chip>
         <q-btn flat round dense icon="logout" @click="logOut" />
       </q-toolbar>
@@ -49,6 +49,7 @@
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 // import { getCheckDigit } from "rut.js";
+import store from "../store";
 
 import useAuth from "../composables/useAuth";
 import EssentialLink from "components/EssentialLink.vue";
@@ -105,7 +106,7 @@ export default defineComponent({
     const { username, authStatus, logout } = useAuth();
     // const col = username();
     // console.log(col);
-    console.log(username.value, authStatus.value);
+    console.log("datos: ", store().state.auth);
 
     return {
       miniState: ref(true),

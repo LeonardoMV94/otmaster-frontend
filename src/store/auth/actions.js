@@ -9,7 +9,7 @@ export const signInUser = async ({ commit }, user) => {
       password_colaborador,
     });
     const { user, token } = data;
-    console.log("signInUser: ", "funciona", user, token);
+    // console.log("signInUser: ", "funciona", user, token);
     commit("loginUser", { user, token });
     return { ok: true };
   } catch (error) {

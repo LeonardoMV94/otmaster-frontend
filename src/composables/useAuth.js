@@ -24,10 +24,10 @@ const useAuth = () => {
     loginUser,
     logout,
 
-    // authStatus: computed(() => store.getters["auth/currentState"]),
-    // username: computed(() => store.getters["auth/username"]),
-    authStatus: computed(() => store().getters.authStatus),
-    username: computed(() => store().getters.username),
+    authStatus: computed(() => store().getters["auth/currentState"]),
+    username: computed(() => store().getters["auth/username"]),
+    // authStatus: computed(() => store().getters.authStatus),
+    // username: computed(() => store().getters.username),
   };
 };
 
