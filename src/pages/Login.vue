@@ -1,5 +1,5 @@
 <template>
-  <div class="column col-md-6 col-sm-6">
+  <div class="column col-md-4 col-sm-6">
     <div class="row justify-center">
       <h5 class="text-h4 text-white q-my-md">Iniciar Sesión</h5>
     </div>
@@ -8,7 +8,7 @@
         <q-card-section>
           <q-form class="">
             <q-input
-              v-model="userForm.rut"
+              v-model="userForm.rut_colaborador"
               square
               outlined
               clearable
@@ -17,7 +17,7 @@
               lazy-rules
               :rules="[
                 (val) => val.length > 0 || 'Este campo es obligatorio',
-                (val) => isValidRut(val),
+                // (val) => isValidRut(val),
               ]"
             >
               <template #before>
@@ -25,7 +25,7 @@
               </template>
             </q-input>
             <q-input
-              v-model="userForm.password"
+              v-model="userForm.password_colaborador"
               square
               outlined
               clearable
@@ -51,7 +51,7 @@
             size="lg"
             class="full-width"
             label="Entrar"
-            @click="verify"
+            @click="onSubmit"
           />
         </q-card-actions>
       </q-card>
@@ -62,20 +62,34 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+
+import useAuth from "../composables/useAuth";
 import { validate } from "rut.js";
 
 export default {
   name: "LoginPage",
   setup() {
     const userForm = ref({
-      rut: "",
-      password: "",
+      rut_colaborador: "",
+      password_colaborador: "",
     });
-    //leo
     const router = useRouter();
+    const { loginUser } = useAuth();
+    const $q = useQuasar();
 
     return {
       userForm,
+      onSubmit: async () => {
+        const { ok, message } = await loginUser(userForm.value);
+        if (!ok) {
+          $q.notify({ type: "negative", message: message });
+        } else {
+          $q.notify({ type: "positive", message: message });
+          console.log("entra a home", router);
+          router.push({ name: "home" });
+        }
+      },
       verify: async () => {
         if (userForm.value.rut == "123") {
           console.log(true);

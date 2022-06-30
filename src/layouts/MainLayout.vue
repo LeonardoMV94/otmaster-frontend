@@ -13,10 +13,10 @@
 
         <q-toolbar-title> Sistema OTMaster </q-toolbar-title>
 
-        <q-chip color="orange" text-color="white" icon="person"
-          >Nombre Usuario</q-chip
-        >
-        <q-btn flat round dense icon="logout" />
+        <q-chip color="orange" text-color="white" icon="person">
+          {{ authStatus }}
+        </q-chip>
+        <q-btn flat round dense icon="logout" @click="logOut" />
       </q-toolbar>
     </q-header>
 
@@ -47,6 +47,10 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
+// import { getCheckDigit } from "rut.js";
+
+import useAuth from "../composables/useAuth";
 import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
@@ -97,6 +101,11 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const router = useRouter();
+    const { username, authStatus, logout } = useAuth();
+    // const col = username();
+    // console.log(col);
+    console.log(username.value, authStatus.value);
 
     return {
       miniState: ref(true),
@@ -104,6 +113,12 @@ export default defineComponent({
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
+      username,
+      authStatus,
+      logOut() {
+        logout();
+        router.push({ name: "login" });
       },
     };
   },

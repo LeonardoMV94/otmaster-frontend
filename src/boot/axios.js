@@ -12,7 +12,7 @@ const api = axios.create({
 });
 
 const authApi = axios.create({
-  baseURL: "http://localhost:8000/api/v1/auth/login",
+  baseURL: "http://localhost:8000/api/v1/auth",
 });
 
 export default boot(({ app }) => {
