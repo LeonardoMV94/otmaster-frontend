@@ -2,8 +2,9 @@
   <!--Acá Empieza el formulario-->
 
   <div class="q-pa-xl" style="max-width: 700px">
-    <h4 class="text-center">Administración de Roles</h4>
     <q-card class="q-pa-md">
+      <h4 class="text-center">Administración de Roles</h4>
+
       <q-form @submit="onSubmit">
         <div class="row">
           <div class="col">
@@ -31,7 +32,7 @@
               fill-mask
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="attribution" color="black" />
               </template>
             </q-input>
           </div>
@@ -47,7 +48,7 @@
   <!--Aca empieza la Q-table-->
   <div class="q-pa-xl" style="max-width: 700px">
     <q-table
-      title="Colaboradores"
+      title="Roles"
       :rows="rows"
       :columns="columns"
       row-key="id"
@@ -70,13 +71,7 @@
         />
 
         <q-space />
-        <q-input
-          v-model="filter"
-          borderless
-          dense
-          debounce="300"
-          color="primary"
-        >
+        <q-input v-model="filter" dense debounce="300" color="primary">
           <template #append>
             <q-icon name="search" />
           </template>
@@ -116,7 +111,7 @@ const originalRows = [
 ];
 
 export default {
-  name: "ClientesPage",
+  name: "RolesPage",
 
   setup() {
     //aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)

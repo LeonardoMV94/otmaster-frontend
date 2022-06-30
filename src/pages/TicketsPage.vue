@@ -23,8 +23,8 @@
           </div>
           <div class="col">
             <q-select
-              outlined
               v-model="cliente"
+              outlined
               :options="options"
               :dense="dense"
               :options-dense="denseOpts"
@@ -39,8 +39,8 @@
         <div class="row">
           <div class="col">
             <q-select
-              outlined
               v-model="colaborador"
+              outlined
               :options="options"
               :dense="dense"
               :options-dense="denseOpts"
@@ -53,8 +53,8 @@
           </div>
           <div class="col">
             <q-select
-              outlined
               v-model="dispositivo"
+              outlined
               :options="options"
               :dense="dense"
               :options-dense="denseOpts"
@@ -69,16 +69,16 @@
         <div class="row">
           <div class="col">
             <q-input
-              label="Describa el problema..."
               v-model="problemaTicket"
+              label="Describa el problema..."
               type="textarea"
               outlined
             />
           </div>
           <div class="col">
             <q-input
-              label="Describa el diagnóstico..."
               v-model="diagnosticoTicket"
+              label="Describa el diagnóstico..."
               type="textarea"
               outlined
             />
@@ -87,8 +87,8 @@
         <div class="row justify-center">
           <div class="col">
             <q-input
-              label="Describa la resolución..."
               v-model="resolucionTicket"
+              label="Describa la resolución..."
               type="textarea"
               outlined
             />
@@ -224,7 +224,7 @@ const originalRows = [
 ];
 
 export default {
-  name: "ClientesPage",
+  name: "TicketsPage",
 
   setup() {
     //aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)

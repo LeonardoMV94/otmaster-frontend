@@ -31,7 +31,7 @@
               fill-mask
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="build_circle" color="black" />
               </template>
             </q-input>
           </div>
@@ -120,7 +120,7 @@ const originalRows = [
 ];
 
 export default {
-  name: "ClientesPage",
+  name: "RepuestosPage",
 
   setup() {
     //aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)

@@ -1,155 +1,163 @@
 <template>
   <!--Acá Empieza el formulario-->
+  <q-page padding>
+    <div class="q-pa-md" style="max-width: 700px">
+      <q-card class="q-pa-sm">
+        <h4 class="text-center">Agregar un Cliente</h4>
 
-  <div class="q-pa-lg" style="max-width: 700px">
-    <h4 class="text-center">Agregar un Cliente</h4>
-    <q-card class="q-pa-md">
-      <q-form @submit="onSubmit">
-        <div class="row">
-          <div class="col">
-            <q-input
-              v-model="idCliente"
-              color="grey-3"
-              label-color="primary"
-              outlined
-              label="ID"
-              mask="########"
-              fill-mask
-            >
-              <template #append>
-                <q-icon name="badge" color="black" />
-              </template>
-            </q-input>
+        <q-form @submit.prevent="procesarFormulario">
+          <div class="row">
+            <div class="col">
+              <q-input
+                ref="validadorIdCliente"
+                v-model="idCliente"
+                color="grey-3"
+                label-color="primary"
+                outlined
+                label="ID"
+                mask="########"
+                fill-mask
+                :rules="[(val) => (val && val.length < 1) || 'Ingresa un ID.']"
+              >
+                <template #append>
+                  <q-icon name="badge" color="black" />
+                </template>
+              </q-input>
+            </div>
+            <div class="col">
+              <q-input
+                v-model="nombreCliente"
+                label-color="primary"
+                outlined
+                label="Nombre del Cliente"
+                mask="SSSSSSSSSSSSSSSSSSSS"
+                fill-mask
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Ingresa un nombre.',
+                ]"
+              >
+                <template #append>
+                  <q-icon name="perm_identity" color="black" />
+                </template>
+              </q-input>
+            </div>
           </div>
-          <div class="col">
-            <q-input
-              v-model="nombreCliente"
-              label-color="primary"
-              outlined
-              label="Nombre del Cliente"
-              mask="SSSSSSSSSSSSSSSSSSSS"
-              fill-mask
-            >
-              <template #append>
-                <q-icon name="event" color="black" />
-              </template>
-            </q-input>
+          <div class="row">
+            <div class="col">
+              <q-input
+                v-model="apPatCliente"
+                color="grey-3"
+                label-color="primary"
+                outlined
+                fill-mask
+                label="Apellido Paterno"
+                mask="SSSSSSSSSSSSSSSSSSSS"
+              >
+                <template #append>
+                  <q-icon name="perm_identity" color="black" />
+                </template>
+              </q-input>
+            </div>
+            <div class="col">
+              <q-input
+                v-model="apMatCliente"
+                color="grey-3"
+                label-color="primary"
+                outlined
+                fill-mask
+                label="Apellido Materno"
+                mask="SSSSSSSSSSSSSSSSSSSS"
+              >
+                <template #append>
+                  <q-icon name="perm_identity" color="black" />
+                </template>
+              </q-input>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <q-input
-              v-model="apPatCliente"
-              color="grey-3"
-              label-color="primary"
-              outlined
-              fill-mask
-              label="Apellido Paterno"
-              mask="SSSSSSSSSSSSSSSSSSSS"
-            >
-              <template #append>
-                <q-icon name="event" color="black" />
-              </template>
-            </q-input>
+          <div class="row">
+            <div class="col">
+              <q-input
+                v-model="correoCliente"
+                type="email"
+                label-color="primary"
+                outlined
+                label="E-mail"
+                mask="##########"
+                fill-mask
+              >
+                <template #append>
+                  <q-icon name="email" color="black" />
+                </template>
+              </q-input>
+            </div>
+            <div class="col">
+              <q-input
+                v-model="telCliente"
+                color="grey-3"
+                label-color="primary"
+                outlined
+                label="Teléfono"
+                mask="(#) ########"
+                fill-mask
+              >
+                <template #append>
+                  <q-icon name="phone" color="black" />
+                </template>
+              </q-input>
+            </div>
           </div>
-          <div class="col">
-            <q-input
-              v-model="apMatCliente"
-              color="grey-3"
-              label-color="primary"
-              outlined
-              fill-mask
-              label="Apellido Materno"
-              mask="SSSSSSSSSSSSSSSSSSSS"
-            >
-              <template #append>
-                <q-icon name="event" color="black" />
-              </template>
-            </q-input>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <q-input
-              v-model="correoCliente"
-              type="email"
-              label-color="primary"
-              outlined
-              label="E-mail"
-              mask="##########"
-              fill-mask
-            >
-              <template #append>
-                <q-icon name="event" color="black" />
-              </template>
-            </q-input>
-          </div>
-          <div class="col">
-            <q-input
-              v-model="telCliente"
-              color="grey-3"
-              label-color="primary"
-              outlined
-              label="Teléfono"
-              mask="(#) ########"
-              fill-mask
-            >
-              <template #append>
-                <q-icon name="event" color="black" />
-              </template>
-            </q-input>
-          </div>
-        </div>
 
-        <div class="row justify-center">
-          <q-btn label="Agregar" type="submit" color="primary" />
-        </div>
-      </q-form>
-    </q-card>
-  </div>
+          <div class="row justify-center">
+            <q-btn label="Agregar" type="submit" color="primary" />
+          </div>
+        </q-form>
+      </q-card>
+    </div>
 
-  <!--Aca empieza la Q-table-->
-  <div class="q-pa-lg" style="max-width: 1400px">
-    <h4 class="text-center">Agregar un Cliente</h4>
+    <!--Aca empieza la Q-table-->
+    <div class="q-pa-lg" style="max-width: 1400px">
+      <h4 class="text-center">Clientes Registrados</h4>
 
-    <q-table
-      title="Clientes"
-      :rows="rows"
-      :columns="columns"
-      row-key="id"
-      :filter="filter"
-      :loading="loading"
-    >
-      <template #top>
-        <q-btn
-          color="primary"
-          :disable="loading"
-          label="Add row"
-          @click="addRow"
-        />
-        <q-btn
-          class="q-ml-sm"
-          color="primary"
-          :disable="loading"
-          label="Remove row"
-          @click="removeRow"
-        />
+      <q-table
+        title="Clientes"
+        :rows="rows"
+        :columns="columns"
+        row-key="id"
+        :filter="filter"
+        :loading="loading"
+      >
+        <template #top>
+          <q-btn
+            color="primary"
+            :disable="loading"
+            label="Add row"
+            @click="addRow"
+          />
+          <q-btn
+            class="q-ml-sm"
+            color="primary"
+            :disable="loading"
+            label="Remove row"
+            @click="removeRow"
+          />
 
-        <q-space />
-        <q-input
-          v-model="filter"
-          borderless
-          dense
-          debounce="300"
-          color="primary"
-        >
-          <template #append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
-    </q-table>
-  </div>
+          <q-space />
+          <q-input
+            v-model="filter"
+            borderless
+            dense
+            debounce="300"
+            color="primary"
+            fill
+          >
+            <template #append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+      </q-table>
+    </div>
+  </q-page>
 </template>
 
 <script>
@@ -157,11 +165,11 @@ import { ref } from "vue";
 
 const columns = [
   {
-    name: "idcliente",
+    name: "idCliente",
     required: true,
     label: "ID",
     align: "center",
-    field: (row) => row.idcliente,
+    field: (row) => row.idCliente,
     format: (val) => `${val}`,
     sortable: true,
   },
@@ -204,7 +212,7 @@ const columns = [
 
 const originalRows = [
   {
-    idcliente: "123213",
+    idCliente: "123213",
     nombreCliente: "Benito",
     APpatCliente: "Camelo",
     APmatCliente: "DeNuevo",
@@ -232,6 +240,12 @@ export default {
     const rowCount = ref(10);
     const rows = ref([...originalRows]);
 
+    //validaciones
+
+    const procesarFormulario = () => {
+      console.log("Se envió prueba de formulario");
+    };
+
     return {
       columns,
       rows,
@@ -244,6 +258,10 @@ export default {
       apMatCliente,
       correoCliente,
       telCliente,
+
+      //validadores
+
+      procesarFormulario,
 
       // emulate fetching data from server
       addRow() {

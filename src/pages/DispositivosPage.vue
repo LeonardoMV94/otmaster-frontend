@@ -2,8 +2,9 @@
   <!--Acá Empieza el formulario-->
 
   <div class="q-pa-lg" style="max-width: 700px">
-    <h4 class="text-center">Agregar un Dispositivo</h4>
     <q-card class="q-pa-md">
+      <h4 class="text-center">Agregar un Dispositivo</h4>
+
       <q-form @submit="onSubmit">
         <div class="row">
           <div class="col">
@@ -31,7 +32,7 @@
               fill-mask
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="tag" color="black" />
               </template>
             </q-input>
           </div>
@@ -48,7 +49,7 @@
               mask="SSSSSSSSSSSSSSSSSSSS"
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="tv" color="black" />
               </template>
             </q-select>
           </div>
@@ -63,7 +64,7 @@
               mask="SSSSSSSSSSSSSSSSSSSS"
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="star" color="black" />
               </template>
             </q-select>
           </div>
@@ -80,7 +81,7 @@
               fill-mask
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="smartphone" color="black" />
               </template>
             </q-select>
           </div>
@@ -191,7 +192,7 @@ const originalRows = [
 ];
 
 export default {
-  name: "ClientesPage",
+  name: "DispositivosPage",
 
   setup() {
     //aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)

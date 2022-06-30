@@ -2,8 +2,9 @@
   <!--Acá Empieza el formulario-->
 
   <div class="q-pa-lg" style="max-width: 700px">
-    <h4 class="text-center">Agregar un Colaborador</h4>
     <q-card class="q-pa-md">
+      <h4 class="text-center">Agregar un Colaborador</h4>
+
       <q-form @submit="onSubmit">
         <div class="row">
           <div class="col">
@@ -31,7 +32,7 @@
               fill-mask
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="engineering" color="black" />
               </template>
             </q-input>
           </div>
@@ -48,7 +49,7 @@
               mask="SSSSSSSSSSSSSSSSSSSS"
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="engineering" color="black" />
               </template>
             </q-input>
           </div>
@@ -63,7 +64,7 @@
               mask="SSSSSSSSSSSSSSSSSSSS"
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="engineering" color="black" />
               </template>
             </q-input>
           </div>
@@ -78,7 +79,7 @@
               label="Contraseña Colaborador"
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="lock" color="black" />
               </template>
             </q-input>
           </div>
@@ -86,13 +87,14 @@
             <q-select
               v-model="rolColaborador"
               outlined
+              label-color="primary"
               :options="options"
               :dense="dense"
               :options-dense="denseOpts"
               label="Tipo de Rol"
             >
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="attribution" color="black" />
               </template>
             </q-select>
           </div>
@@ -211,7 +213,7 @@ const originalRows = [
 ];
 
 export default {
-  name: "ClientesPage",
+  name: "ColaboradoresPage",
 
   setup() {
     //aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)

@@ -40,7 +40,9 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <div class="q-pl-xl">
+        <router-view />
+      </div>
     </q-page-container>
   </q-layout>
 </template>
@@ -83,7 +85,7 @@ const linksList = [
   {
     title: "Tipos de Dispositivos",
     caption: "",
-    icon: "phone_android",
+    icon: "smartphone",
     link: "tipos-dispositivos",
   },
   {
