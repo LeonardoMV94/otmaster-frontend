@@ -52,6 +52,7 @@
             class="full-width"
             label="Entrar"
             @click="onSubmit"
+
           />
         </q-card-actions>
       </q-card>
@@ -89,13 +90,13 @@ export default {
           router.push({ name: "home" });
         }
       },
-      verify: async () => {
-        if (userForm.value.rut == "123") {
-          console.log(true);
-          //si accede redirecciona a home
-          router.push({ name: "home" });
-        }
-      },
+      // verify: async () => {
+      //   if (userForm.value.rut_colaborador == "123") {
+      //     console.log(true);
+      //     //si accede redirecciona a home
+      //     router.push({ name: "home" });
+      //   }
+      // },
       isValidRut: (val) => {
         return validate(val) || "Rut no valido";
       },

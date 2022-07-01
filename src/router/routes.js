@@ -15,7 +15,42 @@ const routes = [
       {
         path: "clientes",
         name: "clientes",
-        component: () => import("pages/IndexPage.vue"),
+        component: () => import("pages/ClientesPage.vue"),
+      },
+      {
+        path: "colaboradores",
+        name: "colaboradores",
+        component: () => import("src/pages/ColaboradoresPage.vue"),
+      },
+      {
+        path: "roles",
+        name: "roles",
+        component: () => import("pages/RolesPage.vue"),
+      },
+      {
+        path: "dispositivos",
+        name: "dispositivos",
+        component: () => import("pages/DispositivosPage.vue"),
+      },
+      {
+        path: "tipos-dispositivos",
+        name: "tipos-dispositivos",
+        component: () => import("pages/TiposDispositivosPage.vue"),
+      },
+      {
+        path: "marcas-dispositivos",
+        name: "marcas-dispositivos",
+        component: () => import("pages/MarcasDispositivosPage.vue"),
+      },
+      {
+        path: "repuestos",
+        name: "repuestos",
+        component: () => import("pages/RepuestosPage.vue"),
+      },
+      {
+        path: "tickets",
+        name: "tickets",
+        component: () => import("pages/TicketsPage.vue"),
       },
     ],
   },
