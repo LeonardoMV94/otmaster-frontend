@@ -1,7 +1,12 @@
 <script setup>
-import { ref } from "vue";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import { ref, onMounted } from "vue";
+import useCliente from "../composables/useCliente";
+
+const { getAllClientes } = useCliente();
+
+const rows = ref([]);
+const clientes = ref(null);
+const separator = ref("vertical");
 
 const columns = [
   {
@@ -60,36 +65,15 @@ const columns = [
   },
 ];
 
-const rows = ref([]);
-const clientes = ref(null);
-const $q = useQuasar();
-const separator = ref("vertical");
-const loadData = () => {
-  api
-    .get("/clientes", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExMjIyMzM4LCJyb2xlIjoxLCJpYXQiOjE2NTU4Mjk1OTh9.7yf8gREybtZ_-G7hovkEHAoC6AXh29JlyvRpRPVmSyk",
-      },
-    })
-    .then((response) => {
-      $q.notify({
-        type: "positive",
-        message: "Conexion establecida con backend.",
-      });
-      clientes.value = response.data;
-      rows.value = clientes.value;
-    })
-    .catch((error) => {
-      console.log(error);
-      $q.notify({
-        type: "negative",
-        message: "Error al conectar con backend",
-      });
-    });
-};
+onMounted(() => {
+  const loadData = async () => {
+    const client = await getAllClientes();
+    clientes.value = client;
+    rows.value = clientes.value;
+  };
 
-loadData();
+  loadData();
+});
 </script>
 
 <template>

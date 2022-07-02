@@ -5,3 +5,7 @@ export const currentState = (state) => {
 export const username = (state) => {
   return state.user?.rut_colaborador || "Usuario";
 };
+
+export const getToken = (state) => {
+  return state.idToken || localStorage.getItem("idToken");
+};

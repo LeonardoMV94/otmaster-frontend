@@ -3,10 +3,12 @@ import { createStore } from "vuex";
 
 // import example from './module-example'
 import auth from "./auth";
+import clientes from "./clientes";
 
 const store = createStore({
   modules: {
     auth,
+    clientes,
   },
 });
 

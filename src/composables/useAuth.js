@@ -1,9 +1,9 @@
 import { computed } from "vue";
-// import { useStore } from "vuex";
-import store from "../store";
+import { useStore } from "vuex";
+// import store from "../store";
 
 const useAuth = () => {
-  // const store = useStore();
+  const store = useStore();
 
   const loginUser = async (user) => {
     const resp = await store.dispatch("auth/signInUser", user);
