@@ -33,31 +33,13 @@ const useCliente = () => {
       });
   };
 
-  const createCliente = (clienteObj) => {
-    api
-      .post("/clientes/add", clienteObj, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.log(response);
-        return response.data;
-      })
-      .catch((error) => {
-        return { message: error.message };
-      });
+  const createCliente = async (clienteObj) => {
+    await store.dispatch("clientes/createCliente", clienteObj);
   };
 
-  const updateCliente = (rut_colaborador, clienteObj) => {
-    api
-      .patch(`clientes/update/${rut_colaborador}`, clienteObj, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return { message: error.message };
-      });
+  const updateCliente = async (rut_colaborador, updateCli) => {
+    console.log("updateCliente useCLiente: ", rut_colaborador, updateCli);
+    await store.dispatch("clientes/updateCliente", rut_colaborador, updateCli);
   };
 
   const deleteCliente = async (rut_colaborador) => {

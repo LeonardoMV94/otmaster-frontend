@@ -9,10 +9,14 @@ import axios from "axios";
 // for each client)
 const api = axios.create({
   baseURL: "http://localhost:8000/api/v1/",
+  "Content-Type": "application/json;charset=UTF-8",
+  "Access-Control-Allow-Origin": "*",
 });
 
 const authApi = axios.create({
   baseURL: "http://localhost:8000/api/v1/auth",
+  "Content-Type": "application/json;charset=UTF-8",
+  "Access-Control-Allow-Origin": "*",
 });
 
 export default boot(({ app }) => {

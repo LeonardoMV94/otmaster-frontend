@@ -2,11 +2,31 @@
 import { ref, onMounted } from "vue";
 import useCliente from "../composables/useCliente";
 
-const { getAllClientes } = useCliente();
+const {
+  getAllClientes,
+  // createCliente,
+  // updateCliente,
+} = useCliente();
 
 const rows = ref([]);
 const clientes = ref(null);
 const separator = ref("vertical");
+
+// const createCli = {
+//   rut_cliente: "18444556",
+//   nombre_cliente: "hola",
+//   apmat_cliente: "token",
+//   appat_cliente: "token",
+//   correo_cliente: "cont@perez.cl",
+//   tel_cliente: "911223344",
+// };
+
+// const updateCli = {
+//   id: "18444556",
+//   data: {
+//     nombre_cliente: "vuevue",
+//   },
+// };
 
 const columns = [
   {
@@ -68,6 +88,11 @@ const columns = [
 onMounted(() => {
   const loadData = async () => {
     const client = await getAllClientes();
+
+    // await createCliente(createCli); DONE
+    // await updateCliente(updateCli); DONE
+    // await
+
     clientes.value = client;
     rows.value = clientes.value;
   };
