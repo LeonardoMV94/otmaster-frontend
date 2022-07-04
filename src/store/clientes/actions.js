@@ -97,9 +97,38 @@ export const updateCliente = async (state, payload) => {
     });
 };
 
-export const deleteCliente = async (rut_colaborador) => {
+export const deleteCliente = async (state, rut_colaborador) => {
   const token = store.getters["auth/getToken"];
-  api.delete(`clientes/delete/${rut_colaborador}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  await api
+    .delete(`clientes/delete/${rut_colaborador}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((response) => {
+      Notify.create({
+        message: `Cliente ${response.data.rut_cliente} eliminado exitosamente!`,
+        type: "negative",
+        caption: "Cuidado al eliminar!",
+        progress: true,
+        actions: [
+          {
+            label: "Cerrar",
+            color: "white",
+          },
+        ],
+      });
+      console.log(response);
+    })
+    .catch((error) => {
+      Notify.create({
+        message: error.response.data.errors[0].message,
+        type: "negative",
+        actions: [
+          {
+            label: "Cerrar",
+            color: "white",
+          },
+        ],
+      });
+      console.log("Error", error.response.data.message);
+    });
 };

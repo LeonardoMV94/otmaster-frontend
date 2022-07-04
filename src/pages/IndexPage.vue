@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import useCliente from "../composables/useCliente";
-
+import PolarAreaChart from "components/charts/PolarAreaChart.vue";
+import PieChartVue from "src/components/charts/PieChart.vue";
 const {
   getAllClientes,
   // createCliente,
@@ -91,7 +92,7 @@ onMounted(() => {
 
     // await createCliente(createCli); DONE
     // await updateCliente(updateCli); DONE
-    // await
+    // await deleteCliente(rut_cliente) FALTA
 
     clientes.value = client;
     rows.value = clientes.value;
@@ -102,7 +103,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-page class="">
+  <q-page padding>
+    <PolarAreaChart />
+    <PieChartVue />
     <template v-if="!clientes">
       <q-markup-table>
         <thead>

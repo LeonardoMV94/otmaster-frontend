@@ -6,17 +6,21 @@
   "author": "Leonardo Muñoz <contacto@pctester.cl>",
   "private": true,
   "scripts": {
+    "dev": "quasar dev",
+    "build": "quasar build",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "apexcharts": "^3.35.3",
     "axios": "^0.21.1",
     "quasar": "^2.6.0",
     "rut.js": "^2.1.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0",
+    "vue3-apexcharts": "^1.4.1",
     "vuex": "^4.0.1"
   },
   "devDependencies": {
