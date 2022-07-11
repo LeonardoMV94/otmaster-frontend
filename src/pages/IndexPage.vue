@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onBeforeMount } from "vue";
 import useCliente from "../composables/useCliente";
 import PolarAreaChart from "components/charts/PolarAreaChart.vue";
 import PieChartVue from "src/components/charts/PieChart.vue";
@@ -7,9 +7,10 @@ const {
   getAllClientes,
   // createCliente,
   // updateCliente,
+  // deleteCliente,
+  getClientes,
 } = useCliente();
 
-const rows = ref([]);
 const clientes = ref(null);
 const separator = ref("vertical");
 
@@ -28,6 +29,8 @@ const separator = ref("vertical");
 //     nombre_cliente: "vuevue",
 //   },
 // };
+
+// const deleteCli = "18683791";
 
 const columns = [
   {
@@ -86,16 +89,13 @@ const columns = [
   },
 ];
 
-onMounted(() => {
+onBeforeMount(() => {
   const loadData = async () => {
-    const client = await getAllClientes();
-
-    // await createCliente(createCli); DONE
+    await getAllClientes();
+    clientes.value = getClientes;
+    // await createCliente(createCli);  DONE
     // await updateCliente(updateCli); DONE
-    // await deleteCliente(rut_cliente) FALTA
-
-    clientes.value = client;
-    rows.value = clientes.value;
+    // await deleteCliente(deleteCli); done
   };
 
   loadData();
@@ -104,8 +104,10 @@ onMounted(() => {
 
 <template>
   <q-page padding>
-    <PolarAreaChart />
-    <PieChartVue />
+    <div class="flex">
+      <PolarAreaChart />
+      <PieChartVue />
+    </div>
     <template v-if="!clientes">
       <q-markup-table>
         <thead>
@@ -159,7 +161,7 @@ onMounted(() => {
       <div class="q-pa-md">
         <q-table
           title="Clientes"
-          :rows="rows"
+          :rows="clientes"
           :columns="columns"
           row-key="name"
           :separator="separator"

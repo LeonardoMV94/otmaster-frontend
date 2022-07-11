@@ -1,46 +1,55 @@
-<script>
+<script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import HCaptcha from "../components/VueHCaptcha.vue";
 
 import useAuth from "../composables/useAuth";
-import { validate } from "rut.js";
+// import { validate } from "rut.js";
 
-export default {
-  name: "LoginPage",
-  setup() {
-    const userForm = ref({
-      rut_colaborador: "",
-      password_colaborador: "",
-    });
-    const router = useRouter();
-    const { loginUser } = useAuth();
-    const $q = useQuasar();
+const userForm = ref({
+  rut_colaborador: "",
+  password_colaborador: "",
+});
+const verified = ref(false);
+const expired = ref(false);
+const error = ref("");
 
-    return {
-      userForm,
-      onSubmit: async () => {
-        const { ok, message } = await loginUser(userForm.value);
-        if (!ok) {
-          $q.notify({ type: "negative", message: message });
-        } else {
-          $q.notify({ type: "positive", message: message });
-          router.push({ name: "home" });
-        }
-      },
-      // verify: async () => {
-      //   if (userForm.value.rut_colaborador == "123") {
-      //     console.log(true);
-      //     //si accede redirecciona a home
-      //     router.push({ name: "home" });
-      //   }
-      // },
-      isValidRut: (val) => {
-        return validate(val) || "Rut no valido";
-      },
-    };
-  },
+const router = useRouter();
+const { loginUser } = useAuth();
+const $q = useQuasar();
+
+const onVerify = () => {
+  verified.value = true;
 };
+const onExpire = () => {
+  verified.value = false;
+  expired.value = true;
+};
+const onError = (err) => {
+  error.value = err;
+  console.log(`Error HCaptcha: ${err}`);
+};
+
+const onSubmit = async () => {
+  const { ok, message } = await loginUser(userForm.value);
+  if (!ok) {
+    $q.notify({ type: "negative", message: message });
+  } else {
+    $q.notify({ type: "positive", message: message });
+    router.push({ name: "home" });
+  }
+};
+// verify: async () => {
+//   if (userForm.value.rut_colaborador == "123") {
+//     console.log(true);
+//     //si accede redirecciona a home
+//     router.push({ name: "home" });
+//   }
+// },
+// const isValidRut = (val) => {
+//   return validate(val) || "Rut no valido";
+// }
 </script>
 
 <template>
@@ -87,6 +96,15 @@ export default {
                 <q-icon name="key" />
               </template>
             </q-input>
+
+            <HCaptcha
+              language="es"
+              sitekey="10000000-ffff-ffff-ffff-000000000001"
+              @verify="onVerify"
+              @expired="onExpire"
+              @challenge-expired="onChallengeExpire"
+              @error="onError"
+            />
           </q-form>
         </q-card-section>
         <q-card-actions class="q-px-md">

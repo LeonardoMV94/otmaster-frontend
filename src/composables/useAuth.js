@@ -1,6 +1,5 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
-// import store from "../store";
 
 const useAuth = () => {
   const store = useStore();
@@ -26,6 +25,7 @@ const useAuth = () => {
 
     authStatus: computed(() => store.getters["auth/currentState"]),
     username: computed(() => store.getters["auth/username"]),
+    user: computed(() => store.getters["auth/getUser"]),
     // authStatus: computed(() => store().getters.authStatus),
     // username: computed(() => store().getters.username),
   };

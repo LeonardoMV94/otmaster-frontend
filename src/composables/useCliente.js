@@ -1,36 +1,16 @@
-// import { computed } from 'vue'
-import store from "../store";
-import { api } from "../boot/axios";
+// import { computed } from "vue";
+// import store from "../store";
+import { useStore } from "vuex";
 
 const useCliente = () => {
-  const token = store.getters["auth/getToken"];
+  const store = useStore();
 
   const getAllClientes = async () => {
-    // return api
-    //   .get("/clientes", { headers: { Authorization: `Bearer ${token}` } })
-    //   .then((response) => {
-    //     return response;
-    //   })
-    //   .catch((error) => {
-    //     return { message: error.message };
-    //   });
     await store.dispatch("clientes/getAllClientes");
-    return store.getters["clientes/getClientes"];
   };
 
-  const getClienteById = (rut_colaborador) => {
-    api
-      .get(`/clientes/${rut_colaborador}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return {
-          message: error.message,
-        };
-      });
+  const getClienteById = async (rut_colaborador) => {
+    await store.dispatch("clientes/getClienteById", rut_colaborador);
   };
 
   const createCliente = async (clienteObj) => {
@@ -43,16 +23,8 @@ const useCliente = () => {
   };
 
   const deleteCliente = async (rut_colaborador) => {
-    await api
-      .delete(`clientes/delete/${rut_colaborador}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return { message: error.message };
-      });
+    console.log("deleteCliente useCliente: ", rut_colaborador);
+    await store.dispatch("clientes/deleteCliente", rut_colaborador);
   };
 
   return {
@@ -61,6 +33,7 @@ const useCliente = () => {
     createCliente,
     updateCliente,
     deleteCliente,
+    getClientes: store.getters["clientes/getClientes"],
   };
 };
 

@@ -22,6 +22,13 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@hcaptcha/vue3-hcaptcha@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@hcaptcha/vue3-hcaptcha/-/vue3-hcaptcha-1.0.1.tgz#25711b976a9b37eb50061c479ab70a1204b5a923"
+  integrity sha512-WFA11dW9aXtMdbKSDTkwR3g5uEl2EU1J0sIbHWhWn53LJkqmvDnU/nZX02nOY8cZM/nOJ1+ZTqW0nkE+3baDRw==
+  dependencies:
+    vue "^3.2.19"
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.9.5.tgz#2cbaf9a89460da24b5ca6531b8bbfc23e1df50c7"
@@ -2767,7 +2774,7 @@ vue3-apexcharts@^1.4.1:
   resolved "https://registry.yarnpkg.com/vue3-apexcharts/-/vue3-apexcharts-1.4.1.tgz#ea561308430a1c5213b7f17c44ba3c845f6c490d"
   integrity sha512-96qP8JDqB9vwU7bkG5nVU+E0UGQn7yYQVqUUCLQMYWDuQyu2vE77H/UFZ1yI+hwzlSTBKT9BqnNG8JsFegB3eg==
 
-vue@^3.0.0:
+vue@^3.0.0, vue@^3.2.19:
   version "3.2.37"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.37.tgz#da220ccb618d78579d25b06c7c21498ca4e5452e"
   integrity sha512-bOKEZxrm8Eh+fveCqS1/NkG/n6aMidsI6hahas7pa0w/l7jkbssJVsRhVDs07IdDq7h9KHswZOgItnwJAgtVtQ==

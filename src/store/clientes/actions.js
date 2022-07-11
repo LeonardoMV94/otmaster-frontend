@@ -17,9 +17,9 @@ export const getAllClientes = async ({ commit }) => {
   commit("setClientes", data);
 };
 
-export const getClienteById = (state, rut_colaborador) => {
+export const getClienteById = async (state, rut_colaborador) => {
   const token = store.getters["auth/getToken"];
-  const { data } = api.get(`/clientes/${rut_colaborador}`, {
+  const { data } = await api.get(`/clientes/${rut_colaborador}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   console.log(data);
@@ -27,7 +27,6 @@ export const getClienteById = (state, rut_colaborador) => {
 
 export const createCliente = async (state, data) => {
   const token = store.getters["auth/getToken"];
-  console.log(data);
   await api
     .post("/clientes/add/", data, {
       headers: { Authorization: `Bearer ${token}` },
@@ -58,6 +57,8 @@ export const createCliente = async (state, data) => {
       });
       console.log("Error", error.response.data.message);
     });
+
+  getAllClientes();
 };
 
 export const updateCliente = async (state, payload) => {
@@ -95,17 +96,19 @@ export const updateCliente = async (state, payload) => {
       });
       console.log("Error", error.response.data.message);
     });
+  //commit("updateCliente", rut_colaborador)
+  getAllClientes();
 };
 
-export const deleteCliente = async (state, rut_colaborador) => {
+export const deleteCliente = async ({ commit }, rut_colaborador) => {
   const token = store.getters["auth/getToken"];
   await api
     .delete(`clientes/delete/${rut_colaborador}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then((response) => {
+    .then(({ data }) => {
       Notify.create({
-        message: `Cliente ${response.data.rut_cliente} eliminado exitosamente!`,
+        message: `Cliente ${data} eliminado exitosamente!`,
         type: "negative",
         caption: "Cuidado al eliminar!",
         progress: true,
@@ -116,11 +119,13 @@ export const deleteCliente = async (state, rut_colaborador) => {
           },
         ],
       });
-      console.log(response);
+      commit("deleteCliente", rut_colaborador);
+      console.log("deleteCliente ACTIONS: ", data);
     })
     .catch((error) => {
+      console.log("deleteCLiente ACTIONS: ", error.response.data.message);
       Notify.create({
-        message: error.response.data.errors[0].message,
+        message: error.response.data.message,
         type: "negative",
         actions: [
           {
@@ -131,4 +136,6 @@ export const deleteCliente = async (state, rut_colaborador) => {
       });
       console.log("Error", error.response.data.message);
     });
+
+  getAllClientes();
 };
