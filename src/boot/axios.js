@@ -7,14 +7,19 @@ import axios from "axios";
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
+let server =
+  process.env.NODE_ENV == "production"
+    ? "https://otmaster.herokuapp.com/api/v1"
+    : "http://localhost:8000/api/v1/";
+
 const api = axios.create({
-  baseURL: "http://localhost:8000/api/v1/",
+  baseURL: server,
   "Content-Type": "application/json;charset=UTF-8",
   "Access-Control-Allow-Origin": "*",
 });
 
 const authApi = axios.create({
-  baseURL: "http://localhost:8000/api/v1/auth",
+  baseURL: `${server}/auth`,
   "Content-Type": "application/json;charset=UTF-8",
   "Access-Control-Allow-Origin": "*",
 });
