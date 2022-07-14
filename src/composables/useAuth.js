@@ -5,7 +5,6 @@ const useAuth = () => {
   const store = useAuthStore();
 
   const loginUser = async (user) => {
-    console.log("loginUer useAuth Composable", user);
     const resp = await store.signInUser(user);
     return resp;
   };

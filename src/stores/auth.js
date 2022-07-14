@@ -9,7 +9,7 @@ export const useAuthStore = defineStore("auth", {
     rol: null || localStorage.getItem("rol"),
   }),
   getters: {
-    getToken: (state) => state.idToken,
+    getToken: (state) => state.idToken || localStorage.getItem("OToken"),
     getUserName: (state) => state.username || "Colaborador",
     getRol: (state) => state.rol,
     //getCurrentState: (state) => state.status,
@@ -32,7 +32,7 @@ export const useAuthStore = defineStore("auth", {
           this.idToken = token;
           this.username = user.rut_colaborador;
           this.rol = user.roles.nombre_rol;
-          console.log("token ? : ", this.getToken);
+          console.log("token ? : ", this.getToken !== null);
           this.user = user;
           return { ok: true };
         }
@@ -43,10 +43,7 @@ export const useAuthStore = defineStore("auth", {
     },
     checkAuthentication() {
       const atoken = this.getToken;
-
-      console.log("token ", atoken, this.idToken);
       if (atoken) {
-        console.log("funciona, si hay token");
         return { ok: true, message: "Si hay Token" };
       } else {
         //this.logout();
