@@ -10,7 +10,7 @@ import axios from "axios";
 let port = process.env.PORT || 8000;
 let server =
   process.env.NODE_ENV == "production"
-    ? `https://localhost:${port}/api/v1/`
+    ? `https://otmaster.up.railway.app:${port}/api/v1/`
     : `http://localhost:${port}/api/v1/`;
 
 const api = axios.create({
