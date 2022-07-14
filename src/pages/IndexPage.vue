@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 import useCliente from "../composables/useCliente";
 import PolarAreaChart from "components/charts/PolarAreaChart.vue";
 import PieChartVue from "src/components/charts/PieChart.vue";
 
 const {
-  // getAllClientes,
+  getAllClientes,
   // createCliente,
   // updateCliente,
   // deleteCliente,
@@ -91,16 +91,15 @@ const columns = [
   },
 ];
 
-// onMounted(() => {
-//   const loadData = async () => {
-//     await getAllClientes();
-//     // await createCliente(createCli);  DONE
-//     // await updateCliente(updateCli); DONE
-//     // await deleteCliente(deleteCli); done
-//   };
-
-//   loadData();
-// });
+onMounted(() => {
+  (async () => {
+    console.log("mounted");
+    await getAllClientes();
+    // await createCliente(createCli);  DONE
+    // await updateCliente(updateCli); DONE
+    // await deleteCliente(deleteCli); done
+  })();
+});
 </script>
 
 <template>

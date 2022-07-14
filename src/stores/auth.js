@@ -1,8 +1,6 @@
 import { defineStore } from "pinia";
 import { authApi } from "../boot/axios";
 
-const user = localStorage.getItem("user");
-
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     status: "authenticating", // authenticated, not-authenticated, authtenticating
@@ -11,8 +9,8 @@ export const useAuthStore = defineStore("auth", {
   }),
   getters: {
     getToken: (state) => state.idToken || localStorage.getItem("idToken"),
-    getUser: (state) => state.user || user,
-    getUserName: (state) => state.user?.rut_colaborador || "Usuario",
+    getUser: (state) => state.user || localStorage.getItem("user"),
+    getUserName: (state) => state.user?.rut_colaborador || "Colaborador",
     getCurrentState: (state) => state.status,
   },
   actions: {

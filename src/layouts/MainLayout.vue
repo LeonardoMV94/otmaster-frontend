@@ -124,7 +124,9 @@ const logOut = () => {
 
     <q-page-container>
       <div class="q-pl-xl">
-        <router-view />
+        <KeepAlive>
+          <router-view />
+        </KeepAlive>
       </div>
     </q-page-container>
   </q-layout>
