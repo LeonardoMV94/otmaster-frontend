@@ -22,7 +22,7 @@ const onSubmit = async () => {
   if (!ok) {
     $q.notify({ type: "negative", message: message });
   } else {
-    getAllClientes();
+    await getAllClientes();
     $q.notify({ type: "positive", message: message });
     router.push({ name: "home" });
   }

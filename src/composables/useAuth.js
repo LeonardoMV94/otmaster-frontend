@@ -5,12 +5,13 @@ const useAuth = () => {
   const store = useAuthStore();
 
   const loginUser = async (user) => {
+    console.log("loginUer useAuth Composable", user);
     const resp = await store.signInUser(user);
     return resp;
   };
 
-  const checkAuthStatus = async () => {
-    const resp = await store.checkAuthentication();
+  const checkAuthStatus = () => {
+    const resp = store.checkAuthentication();
     return resp;
   };
 
@@ -23,11 +24,9 @@ const useAuth = () => {
     loginUser,
     logout,
 
-    authStatus: computed(() => store.getCurrentState),
+    // authStatus: computed(() => store.getCurrentState),
     username: computed(() => store.getUserName),
-    user: computed(() => store.getUser),
-    // authStatus: computed(() => store().getters.authStatus),
-    // username: computed(() => store().getters.username),
+    rol: computed(() => store.getRol),
   };
 };
 

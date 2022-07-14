@@ -3,15 +3,16 @@ import { authApi } from "../boot/axios";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    status: "authenticating", // authenticated, not-authenticated, authtenticating
-    user: null,
-    idToken: null,
+    // status: "authenticating", // authenticated, not-authenticated, authtenticating
+    idToken: null || localStorage.getItem("OToken"),
+    username: null || localStorage.getItem("username"),
+    rol: null || localStorage.getItem("rol"),
   }),
   getters: {
-    getToken: (state) => state.idToken || localStorage.getItem("idToken"),
-    getUser: (state) => state.user || localStorage.getItem("user"),
-    getUserName: (state) => state.user?.rut_colaborador || "Colaborador",
-    getCurrentState: (state) => state.status,
+    getToken: (state) => state.idToken,
+    getUserName: (state) => state.username || "Colaborador",
+    getRol: (state) => state.rol,
+    //getCurrentState: (state) => state.status,
   },
   actions: {
     async signInUser(user) {
@@ -23,36 +24,42 @@ export const useAuthStore = defineStore("auth", {
           password_colaborador,
         });
         const { user, token } = data;
-
+        console.log(token);
         if (token) {
-          localStorage.setItem("idToken", token);
-          localStorage.setItem("user", user);
+          localStorage.setItem("OToken", token);
+          localStorage.setItem("username", user.rut_colaborador);
+          localStorage.setItem("rol", user.roles.nombre_rol);
           this.idToken = token;
+          this.username = user.rut_colaborador;
+          this.rol = user.roles.nombre_rol;
+          console.log("token ? : ", this.getToken);
           this.user = user;
-          this.status = "authenticated";
+          return { ok: true };
         }
-        return { ok: true };
       } catch (error) {
         console.log("signInUser: ", "NO funciona");
         return { ok: false, message: error };
       }
     },
-    async checkAuthentication() {
-      const idToken = this.getToken;
+    checkAuthentication() {
+      const atoken = this.getToken;
 
-      if (!idToken) {
-        this.logout();
-        return { ok: false, message: "No hay token" };
-      } else {
+      console.log("token ", atoken, this.idToken);
+      if (atoken) {
         console.log("funciona, si hay token");
         return { ok: true, message: "Si hay Token" };
+      } else {
+        //this.logout();
+        return { ok: false, message: "No hay token" };
       }
     },
     logout() {
       this.user = null;
       this.idToken = null;
-      this.status = "not-authenticated";
-      localStorage.removeItem("idToken");
+      localStorage.removeItem("OToken");
+      localStorage.removeItem("username");
+      localStorage.removeItem("rol");
+
       console.log("logout");
     },
   },

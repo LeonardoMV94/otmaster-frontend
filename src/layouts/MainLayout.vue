@@ -122,12 +122,12 @@ const logOut = () => {
       </q-list>
     </q-drawer>
 
-    <q-page-container>
-      <div class="q-pl-xl">
-        <KeepAlive>
+    <keep-alive>
+      <q-page-container>
+        <div class="q-pl-xl">
           <router-view />
-        </KeepAlive>
-      </div>
-    </q-page-container>
+        </div>
+      </q-page-container>
+    </keep-alive>
   </q-layout>
 </template>
