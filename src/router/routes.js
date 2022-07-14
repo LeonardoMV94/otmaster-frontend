@@ -1,9 +1,9 @@
-// import isAuthenticatedGuard from "./AuthGuard";
+import isAuthenticatedGuard from "./AuthGuard";
 
 const routes = [
   {
     path: "/",
-    // beforeEnter: [isAuthenticatedGuard],
+    beforeEnter: [isAuthenticatedGuard],
     name: "home",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -15,7 +15,7 @@ const routes = [
       {
         path: "clientes",
         name: "clientes",
-        component: () => import("pages/ClientesPage.vue"),
+        component: () => import("pages/IndexPage.vue"),
       },
       {
         path: "colaboradores",

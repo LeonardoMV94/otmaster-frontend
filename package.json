@@ -17,12 +17,12 @@
     "@quasar/extras": "^1.0.0",
     "apexcharts": "^3.35.3",
     "axios": "^0.21.1",
+    "pinia": "^2.0.16",
     "quasar": "^2.6.0",
     "rut.js": "^2.1.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0",
-    "vue3-apexcharts": "^1.4.1",
-    "vuex": "^4.0.1"
+    "vue3-apexcharts": "^1.4.1"
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.0.0",

@@ -2,40 +2,27 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
-import HCaptcha from "../components/VueHCaptcha.vue";
 
 import useAuth from "../composables/useAuth";
+import useCliente from "../composables/useCliente";
 // import { validate } from "rut.js";
 
 const userForm = ref({
   rut_colaborador: "",
   password_colaborador: "",
 });
-const verified = ref(false);
-const expired = ref(false);
-const error = ref("");
 
 const router = useRouter();
 const { loginUser } = useAuth();
+const { getAllClientes } = useCliente();
 const $q = useQuasar();
-
-const onVerify = () => {
-  verified.value = true;
-};
-const onExpire = () => {
-  verified.value = false;
-  expired.value = true;
-};
-const onError = (err) => {
-  error.value = err;
-  console.log(`Error HCaptcha: ${err}`);
-};
 
 const onSubmit = async () => {
   const { ok, message } = await loginUser(userForm.value);
   if (!ok) {
     $q.notify({ type: "negative", message: message });
   } else {
+    getAllClientes();
     $q.notify({ type: "positive", message: message });
     router.push({ name: "home" });
   }
@@ -96,15 +83,6 @@ const onSubmit = async () => {
                 <q-icon name="key" />
               </template>
             </q-input>
-
-            <HCaptcha
-              language="es"
-              sitekey="10000000-ffff-ffff-ffff-000000000001"
-              @verify="onVerify"
-              @expired="onExpire"
-              @challenge-expired="onChallengeExpire"
-              @error="onError"
-            />
           </q-form>
         </q-card-section>
         <q-card-actions class="q-px-md">
