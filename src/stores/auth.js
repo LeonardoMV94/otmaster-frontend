@@ -8,12 +8,14 @@ export const useAuthStore = defineStore("auth", {
     username: null || localStorage.getItem("username"),
     rol: null || localStorage.getItem("rol"),
   }),
+
   getters: {
     getToken: (state) => state.idToken || localStorage.getItem("OToken"),
     getUserName: (state) => state.username || "Colaborador",
-    getRol: (state) => state.rol,
+    getRol: (state) => state.rol || localStorage.getItem("rol"),
     //getCurrentState: (state) => state.status,
   },
+
   actions: {
     async signInUser(user) {
       const { rut_colaborador, password_colaborador } = user;
@@ -24,7 +26,7 @@ export const useAuthStore = defineStore("auth", {
           password_colaborador,
         });
         const { user, token } = data;
-        console.log(token);
+        console.log("Stores Auth -> signInUser: ", token !== null);
         if (token) {
           localStorage.setItem("OToken", token);
           localStorage.setItem("username", user.rut_colaborador);
@@ -36,23 +38,28 @@ export const useAuthStore = defineStore("auth", {
           this.user = user;
           return { ok: true };
         }
-      } catch (error) {
-        console.log("signInUser: ", "NO funciona");
-        return { ok: false, message: error };
+      } catch ({ response }) {
+        console.log("signInUser error: ", response.data.message);
+        return { ok: false, message: response.data.message };
       }
     },
-    checkAuthentication() {
-      const atoken = this.getToken;
+    async checkAuthentication() {
+      const atoken = await this.getToken;
+      console.log(
+        "Stores Auth -> checkAuthentication() atoken: ",
+        atoken !== null
+      );
       if (atoken) {
         return { ok: true, message: "Si hay Token" };
       } else {
-        //this.logout();
+        this.logout();
         return { ok: false, message: "No hay token" };
       }
     },
     logout() {
-      this.user = null;
       this.idToken = null;
+      this.username = null;
+      this.rol = null;
       localStorage.removeItem("OToken");
       localStorage.removeItem("username");
       localStorage.removeItem("rol");

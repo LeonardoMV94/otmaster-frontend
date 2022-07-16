@@ -1,7 +1,7 @@
 {
   "name": "otmaster-frontend",
   "version": "0.0.1",
-  "description": "A Quasar Project",
+  "description": "Sistema de Soporte con Tickets",
   "productName": "OtMaster",
   "author": "Leonardo Muñoz <contacto@pctester.cl>",
   "private": true,

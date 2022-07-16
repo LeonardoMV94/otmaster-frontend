@@ -1,3 +1,38 @@
+<script setup>
+import { useRouter } from "vue-router";
+// import { useAuthStore } from "stores/auth";
+
+// const store = useAuthStore();
+const router = useRouter();
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
+  },
+  caption: {
+    type: String,
+    default: "",
+  },
+  link: {
+    type: String,
+    default: "#",
+  },
+  icon: {
+    type: String,
+    default: "",
+  },
+});
+
+const navigateTo = () => {
+  if (props.link.startsWith("http")) {
+    window.open(props.link, "_blank");
+  } else {
+    router.push({ name: props.link });
+  }
+};
+</script>
+
 <template>
   <q-item clickable tag="a" @click="navigateTo">
     <q-item-section v-if="icon" avatar>
@@ -10,46 +45,3 @@
     </q-item-section>
   </q-item>
 </template>
-
-<script>
-import { defineComponent } from "vue";
-import { useRouter } from "vue-router";
-
-export default defineComponent({
-  name: "EssentialLink",
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-
-    caption: {
-      type: String,
-      default: "",
-    },
-
-    link: {
-      type: String,
-      default: "#",
-    },
-
-    icon: {
-      type: String,
-      default: "",
-    },
-  },
-  setup(props) {
-    const router = useRouter();
-
-    return {
-      navigateTo() {
-        if (props.link.startsWith("http")) {
-          window.open(props.link, "_blank");
-        } else {
-          router.push({ name: props.link });
-        }
-      },
-    };
-  },
-});
-</script>

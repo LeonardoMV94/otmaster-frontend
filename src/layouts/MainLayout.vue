@@ -9,10 +9,12 @@ import useAuth from "../composables/useAuth";
 import EssentialLink from "components/EssentialLink.vue";
 
 const router = useRouter();
-const { username, logout } = useAuth();
+const { username, rol, logout } = useAuth();
 
 const leftDrawerOpen = ref(false);
 const miniState = ref(true);
+
+console.log("Soy ", rol.value);
 
 const linksList = [
   {
@@ -27,18 +29,18 @@ const linksList = [
     icon: "group",
     link: "clientes",
   },
-  {
-    title: "Colaboradores",
-    caption: "",
-    icon: "support_agent",
-    link: "colaboradores",
-  },
-  {
-    title: "Roles",
-    caption: "",
-    icon: "admin_panel_settings",
-    link: "roles",
-  },
+  // {
+  //   title: "Colaboradores",
+  //   caption: "",
+  //   icon: "support_agent",
+  //   link: "colaboradores",
+  // },
+  // {
+  //   title: "Roles",
+  //   caption: "",
+  //   icon: "admin_panel_settings",
+  //   link: "roles",
+  // },
   {
     title: "Dispositivos",
     caption: "",
@@ -63,13 +65,24 @@ const linksList = [
     icon: "build_circle",
     link: "repuestos",
   },
-  {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
-  },
 ];
+
+if (rol.value == "admin") {
+  linksList.push(
+    {
+      title: "Colaboradores",
+      caption: "",
+      icon: "support_agent",
+      link: "colaboradores",
+    },
+    {
+      title: "Roles",
+      caption: "",
+      icon: "admin_panel_settings",
+      link: "roles",
+    }
+  );
+}
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
