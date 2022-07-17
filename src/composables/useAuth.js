@@ -27,6 +27,7 @@ const useAuth = () => {
     // authStatus: computed(() => store.getCurrentState),
     username: computed(() => store.getUserName),
     rol: computed(() => store.getRol),
+    isAdmin: computed(() => store.getRol).value == "admin",
   };
 };
 

@@ -9,14 +9,23 @@ import useAuth from "../composables/useAuth";
 import EssentialLink from "components/EssentialLink.vue";
 
 const router = useRouter();
-const { username, rol, logout } = useAuth();
+const { username, rol, logout, isAdmin } = useAuth();
 
 const leftDrawerOpen = ref(false);
 const miniState = ref(true);
 
 console.log("Soy ", rol.value);
 
+const iconRol = rol.value == "admin" ? "admin_panel_settings" : "person";
+console.log("Admin?: ", isAdmin);
+
 const linksList = [
+  {
+    title: "Dashboard",
+    caption: "",
+    icon: "dashboard",
+    link: "homeIndex",
+  },
   {
     title: "Ticket",
     caption: "",
@@ -108,8 +117,7 @@ const logOut = () => {
         />
 
         <q-toolbar-title> Sistema OTMaster </q-toolbar-title>
-
-        <q-chip color="orange" text-color="white" icon="person">
+        <q-chip color="orange" text-color="white" :icon="iconRol">
           {{ username }}
         </q-chip>
         <q-btn flat round dense icon="logout" @click="logOut" />
