@@ -4,6 +4,7 @@ import { ref, onMounted } from "vue";
 import useCliente from "../composables/useCliente";
 import PolarAreaChart from "components/charts/PolarAreaChart.vue";
 import PieChartVue from "src/components/charts/PieChart.vue";
+import LineChartVue from "src/components/charts/LineChart.vue";
 
 const {
   getAllClientes,
@@ -107,6 +108,7 @@ onMounted(() => {
     <div class="flex">
       <PolarAreaChart />
       <PieChartVue />
+      <LineChartVue />
     </div>
 
     <template v-if="!getClientes">
