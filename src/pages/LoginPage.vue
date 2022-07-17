@@ -2,21 +2,17 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
-
 import useAuth from "../composables/useAuth";
 import useCliente from "../composables/useCliente";
 // import { validate } from "rut.js";
-
 const userForm = ref({
   rut_colaborador: "",
   password_colaborador: "",
 });
-
 const router = useRouter();
 const { loginUser } = useAuth();
 const { getAllClientes } = useCliente();
 const $q = useQuasar();
-
 const onSubmit = async () => {
   const { ok, message } = await loginUser(userForm.value);
   if (!ok) {
@@ -27,16 +23,6 @@ const onSubmit = async () => {
     router.push({ name: "home" });
   }
 };
-// verify: async () => {
-//   if (userForm.value.rut_colaborador == "123") {
-//     console.log(true);
-//     //si accede redirecciona a home
-//     router.push({ name: "home" });
-//   }
-// },
-// const isValidRut = (val) => {
-//   return validate(val) || "Rut no valido";
-// }
 </script>
 
 <template>
