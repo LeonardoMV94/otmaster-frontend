@@ -35,6 +35,7 @@ const useDispositivo = () => {
     deleteDispositivo,
     getDispositivos: computed(() => store.getDispositivos),
     getDispositivo: computed(() => store.getDispositivo),
+    getOnlyIdDispositivos: computed(() => store.getOnlyIdDispositivos),
   };
 };
 

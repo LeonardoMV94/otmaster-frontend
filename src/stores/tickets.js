@@ -43,6 +43,7 @@ export const useTicketsStore = defineStore("tickets", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
+          console.log(response.data.id_ticket);
           Notify.create({
             message: `Ticket ${response.data.id_ticket} creado exitosamente!`,
             type: "positive",
@@ -57,7 +58,7 @@ export const useTicketsStore = defineStore("tickets", {
         })
         .catch((error) => {
           Notify.create({
-            message: error.response.data.errors[0].message,
+            message: error.response.data,
             type: "negative",
             actions: [
               {
@@ -114,7 +115,7 @@ export const useTicketsStore = defineStore("tickets", {
         })
         .then(({ data }) => {
           Notify.create({
-            message: `Ticket ${data} eliminado exitosamente!`,
+            message: `Ticket ${data.id} eliminado exitosamente!`,
             type: "negative",
             caption: "Cuidado al eliminar!",
             progress: true,

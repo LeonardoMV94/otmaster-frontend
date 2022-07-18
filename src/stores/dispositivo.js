@@ -13,6 +13,8 @@ export const useDispositivosStore = defineStore("Dispositivos", {
   getters: {
     getDispositivos: (state) => state.dispositivos,
     getDispositivo: (state) => state.dispositivo,
+    getOnlyIdDispositivos: (state) =>
+      state.dispositivos.map((x) => x.id_dispositivo),
   },
   actions: {
     async getAllDispositivos() {

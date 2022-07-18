@@ -4,16 +4,22 @@ import FormTicket from "components/FormTicket.vue";
 import useAuth from "../../composables/useAuth";
 import useTicket from "../../composables/useTickets";
 const { isAdmin } = useAuth();
-const { getAllTickets, getTickets } = useTicket();
+const { getAllTickets, deleteTicket, getTickets } = useTicket();
 
 onMounted(async () => {
   await getAllTickets();
 });
 
 let showDialog = ref(false);
+let confirm = ref(false);
+let idt = ref(null);
 const filter = ref("");
 const changeShow = () => {
   showDialog.value = !showDialog.value;
+};
+const changeConfirm = (id) => {
+  idt.value = id;
+  confirm.value = !confirm.value;
 };
 
 const columns = [
@@ -82,20 +88,22 @@ const columns = [
 ];
 
 const rows = getTickets.value;
-const editarItem = (value) => {
-  console.log("editar", value);
-};
+// const editarItem = (value) => {
+//   console.log("editar", value);
+// };
 
-const deleteItem = (value) => {
-  isAdmin
-    ? console.log("delete permitido", value)
-    : console.log("no hay permisos");
+const deleteItem = async (value) => {
+  if (isAdmin) {
+    console.log("delete permitido", value);
+    await deleteTicket(value);
+  } else {
+    console.log("no hay permisos");
+  }
 };
 </script>
 
 <template>
   <div class="q-pa-md">
-    <FormTicket />
     <q-table
       title="Administración de Tickets"
       :rows="rows"
@@ -105,12 +113,34 @@ const deleteItem = (value) => {
       binary-state-sort
     >
       <template #top>
+        <!-- Formulario -->
         <q-dialog v-model="showDialog">
           <FormTicket />
         </q-dialog>
+        <!-- Confirmacion de eliminacion -->
+        <q-dialog v-model="confirm" persistent>
+          <q-card>
+            <q-card-section class="row items-center">
+              <q-avatar icon="warning" color="warning" text-color="white" />
+              <span class="q-ml-sm"
+                >¿Estás seguro de eliminar el ticket nº {{ idt }}?</span
+              >
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn v-close-popup flat label="Cancelar" color="primary" />
+              <q-btn
+                v-close-popup
+                flat
+                label="Confirmar"
+                color="primary"
+                @click="deleteItem(idt)"
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
         <q-btn
           color="primary"
-          :disable="loading"
           label="Añadir Ticket"
           @click="changeShow"
         ></q-btn>
@@ -160,14 +190,14 @@ const deleteItem = (value) => {
             props.row.estado_ticket
           }}</q-td>
           <q-td key="acciones" :props="props">
-            <q-btn push rounded color="blue" @click="editarItem(props.row)"
+            <!-- <q-btn push rounded color="blue" @click="editarItem(props.row)"
               ><q-icon name="edit"
-            /></q-btn>
+            /></q-btn> -->
             <q-btn
               push
               rounded
               color="red"
-              @click="deleteItem(props.row.id_ticket)"
+              @click="changeConfirm(props.row.id_ticket)"
               ><q-icon name="delete"
             /></q-btn>
           </q-td>

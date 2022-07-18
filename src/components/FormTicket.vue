@@ -1,41 +1,59 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onActivated } from "vue";
+
 import useCliente from "../composables/useCliente";
 import useColaborador from "../composables/useColaboradores";
+import useDispositivo from "../composables/useDispositivo";
+import useTicket from "../composables/useTickets";
+
 const { getAllClientes, getOnlyRuts } = useCliente();
 const { getAllColaboradores, getOnlyRutCol } = useColaborador();
+const { getAllDispositivos, getOnlyIdDispositivos } = useDispositivo();
+const { createTicket } = useTicket();
+
+// TODO:_ añadir useDispositivo con get by id u otro
+//añadir popUp de edición de problema , diag y resol
 onMounted(async () => {
-  await getAllClientes();
-  await getAllColaboradores();
+  await init();
+});
+onActivated(async () => {
+  await init();
 });
 
+const init = async () => {
+  await getAllClientes();
+  await getAllColaboradores();
+  await getAllDispositivos();
+};
+// solucion repuestos multiples, single multiple selections
+// https://quasar.dev/vue-components/select
+
 const optionscli = getOnlyRuts.value;
-const cliente = ref(null);
+const rut_cliente = ref(null);
 
 const optionscol = getOnlyRutCol.value;
-const colaborador = ref(null);
-const dispositivo = ref(null);
-const problemaTicket = ref(null);
-const resolucionTicket = ref(null);
-const diagnosticoTicket = ref(null);
+const rut_colaborador = ref(null);
 
-// alternativa a lo anterior
-// const clienteObj = ref({
-//   idCliente: 0,
-//   nombreCliente: '',
-//   apPatCliente: '',
-//   apMatCliente: '',
-//   correoCliente: '',
-//   telCliente: '',
-// })
-// y se llama en los v-model como clienteObj.idCliente
+const id_dispositivo = ref(null);
+const optionsdis = getOnlyIdDispositivos.value;
+const problema_ticket = ref(null);
+// const resolucion_ticket = ref(null);
+// const diagnostico_ticket = ref(null);
+const estado_ticket = ref(1);
 
 //validaciones
-const procesarFormulario = () => {
-  console.log("Se envió prueba de formulario");
+const procesarFormulario = async () => {
+  const createTicketObj = {
+    clientesRutCliente: rut_cliente.value,
+    colaboradoresRutColaborador: rut_colaborador.value,
+    dispositivosIdDispositivo: id_dispositivo.value,
+    problema_ticket: problema_ticket.value,
+    estado_ticket: estado_ticket.value,
+  };
+  await createTicket(createTicketObj);
 };
 
-// filtros
+// filtros TODO: crear filtros
 // const filterFn = (val, update) => {
 //   if (val === "") {
 //     update(() => {
@@ -50,14 +68,14 @@ const procesarFormulario = () => {
 </script>
 
 <template>
-  <div style="max-width: 700px">
+  <div style="width: 700px; max-width: 80vw">
     <q-card class="q-pa-sm">
       <h4 class="text-center">Crear Ticket (OT)</h4>
       <q-form @submit="procesarFormulario">
         <div class="row">
           <div class="col">
             <q-select
-              v-model="cliente"
+              v-model="rut_cliente"
               outlined
               use-input
               input-debounce="0"
@@ -82,7 +100,7 @@ const procesarFormulario = () => {
         <div class="row">
           <div class="col">
             <q-select
-              v-model="colaborador"
+              v-model="rut_colaborador"
               outlined
               use-input
               input-debounce="0"
@@ -98,7 +116,7 @@ const procesarFormulario = () => {
                 </q-item>
               </template>
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="support_agent" color="black" />
               </template>
             </q-select>
           </div>
@@ -106,15 +124,23 @@ const procesarFormulario = () => {
         <div class="row">
           <div class="col">
             <q-select
-              v-model="dispositivo"
+              v-model="id_dispositivo"
               outlined
-              :options="options"
-              :dense="dense"
-              :options-dense="denseOpts"
-              label="Dispositivo Atendido"
+              use-input
+              input-debounce="0"
+              label="Dispositivo a reparar"
+              :options="optionsdis"
+              behavior="menu"
             >
+              <template #no-option>
+                <q-item>
+                  <q-item-section class="text-grey">
+                    No hay dispositivos
+                  </q-item-section>
+                </q-item>
+              </template>
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="devices_other" color="black" />
               </template>
             </q-select>
           </div>
@@ -122,17 +148,17 @@ const procesarFormulario = () => {
         <div class="row">
           <div class="col">
             <q-input
-              v-model="problemaTicket"
-              label="Describa el problema..."
+              v-model="problema_ticket"
+              label="Describa el problema... *"
               type="textarea"
               outlined
             />
           </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col">
             <q-input
-              v-model="diagnosticoTicket"
+              v-model="diagnostico_ticket"
               label="Describa el diagnóstico..."
               type="textarea"
               outlined
@@ -142,13 +168,13 @@ const procesarFormulario = () => {
         <div class="row justify-center">
           <div class="col">
             <q-input
-              v-model="resolucionTicket"
+              v-model="resolucion_ticket"
               label="Describa la resolución..."
               type="textarea"
               outlined
             />
           </div>
-        </div>
+        </div> -->
         <div class="row justify-center">
           <q-btn label="Agregar" type="submit" color="primary" />
         </div>
