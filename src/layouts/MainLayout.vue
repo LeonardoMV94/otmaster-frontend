@@ -21,12 +21,6 @@ console.log("Admin?: ", isAdmin);
 
 const linksList = [
   {
-    title: "Test",
-    caption: "",
-    icon: "dashboard",
-    link: "test",
-  },
-  {
     title: "Dashboard",
     caption: "",
     icon: "dashboard",
@@ -97,6 +91,15 @@ if (rol.value == "admin") {
       link: "roles",
     }
   );
+}
+
+if (process.env.NODE_ENV !== "production") {
+  linksList.push({
+    title: "Test",
+    caption: "",
+    icon: "bug_report",
+    link: "test",
+  });
 }
 
 const toggleLeftDrawer = () => {

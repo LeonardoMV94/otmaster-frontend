@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onActivated } from "vue";
+import { ref, onBeforeMount, onActivated } from "vue";
 
 import useCliente from "../composables/useCliente";
 import useColaborador from "../composables/useColaboradores";
@@ -13,7 +13,7 @@ const { createTicket } = useTicket();
 
 // TODO:_ añadir useDispositivo con get by id u otro
 //añadir popUp de edición de problema , diag y resol
-onMounted(async () => {
+onBeforeMount(async () => {
   await init();
 });
 onActivated(async () => {

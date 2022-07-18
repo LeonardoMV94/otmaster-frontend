@@ -31,12 +31,17 @@ const useColaborador = () => {
     await store.deleteColaborador(rut_colaborador);
   };
 
+  const getColabByRut = (rut) => {
+    return store.getColaboradores.find((c) => c.rut_colaborador == rut);
+  };
+
   return {
     getAllColaboradores,
     getColaboradorById,
     createColaborador,
     updateColaborador,
     deleteColaborador,
+    getColabByRut,
     getColaboradores: computed(() => store.getColaboradores),
     getColaborador: computed(() => store.getColaborador),
     getOnlyRutCol: computed(() => store.getOnlyRutCol),

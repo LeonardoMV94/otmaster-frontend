@@ -28,12 +28,17 @@ const useCliente = () => {
     await store.deleteCliente(rut_colaborador);
   };
 
+  const getClienteByRut = (rut) => {
+    return store.getClientes.find((c) => c.rut_cliente == rut);
+  };
+
   return {
     getAllClientes,
     getClienteById,
     createCliente,
     updateCliente,
     deleteCliente,
+    getClienteByRut,
     getClientes: computed(() => store.getClientes),
     getOnlyRuts: computed(() => store.getOnlyRuts),
   };
