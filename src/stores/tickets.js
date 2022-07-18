@@ -26,7 +26,7 @@ export const useTicketsStore = defineStore("tickets", {
       });
 
       console.log("getAllTickets ACTIONS: ", data);
-      this.clientes = data;
+      this.tickets = data;
     },
     async getTicketById(id_ticket) {
       const token = auth.getToken;

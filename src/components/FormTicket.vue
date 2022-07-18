@@ -1,15 +1,24 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import useCliente from "../composables/useCliente";
+import useColaborador from "../composables/useColaboradores";
+const { getAllClientes, getOnlyRuts } = useCliente();
+const { getAllColaboradores, getOnlyRutCol } = useColaborador();
+onMounted(async () => {
+  await getAllClientes();
+  await getAllColaboradores();
+});
 
-//aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)
-
-const idTicket = ref(null);
+const optionscli = getOnlyRuts.value;
 const cliente = ref(null);
+
+const optionscol = getOnlyRutCol.value;
 const colaborador = ref(null);
 const dispositivo = ref(null);
 const problemaTicket = ref(null);
 const resolucionTicket = ref(null);
 const diagnosticoTicket = ref(null);
+
 // alternativa a lo anterior
 // const clienteObj = ref({
 //   idCliente: 0,
@@ -25,40 +34,47 @@ const diagnosticoTicket = ref(null);
 const procesarFormulario = () => {
   console.log("Se envió prueba de formulario");
 };
+
+// filtros
+// const filterFn = (val, update) => {
+//   if (val === "") {
+//     update(() => {
+//       options.value = getOnlyRuts.value;
+//     });
+//     return;
+//   }
+//   update(() => {
+//     options.value = getOnlyRuts.value.filter((rut) => rut.indexOf(val) > -1);
+//   });
+// };
 </script>
 
 <template>
-  <div class="q-pa-lg" style="max-width: 700px">
-    <h4 class="text-center">Crear Ticket (Órden Técnica)</h4>
-    <q-card class="q-pa-md">
+  <div style="max-width: 700px">
+    <q-card class="q-pa-sm">
+      <h4 class="text-center">Crear Ticket (OT)</h4>
       <q-form @submit="procesarFormulario">
         <div class="row">
-          <div class="col">
-            <q-input
-              v-model="idTicket"
-              color="grey-3"
-              label-color="primary"
-              outlined
-              label="ID Ticket"
-              mask="#######"
-              fill-mask
-            >
-              <template #append>
-                <q-icon name="badge" color="black" />
-              </template>
-            </q-input>
-          </div>
           <div class="col">
             <q-select
               v-model="cliente"
               outlined
-              :options="options"
-              :dense="dense"
-              :options-dense="denseOpts"
-              label="Cliente Atendido"
+              use-input
+              input-debounce="0"
+              label="Elija un cliente"
+              :options="optionscli"
+              behavior="menu"
+              @filter="filterFn"
             >
+              <template #no-option>
+                <q-item>
+                  <q-item-section class="text-grey">
+                    No hay Clientes
+                  </q-item-section>
+                </q-item>
+              </template>
               <template #append>
-                <q-icon name="event" color="black" />
+                <q-icon name="person" color="black" />
               </template>
             </q-select>
           </div>
@@ -68,16 +84,26 @@ const procesarFormulario = () => {
             <q-select
               v-model="colaborador"
               outlined
-              :options="options"
-              :dense="dense"
-              :options-dense="denseOpts"
-              label="Colaborador que Atiende"
+              use-input
+              input-debounce="0"
+              label="Colaborador que atiende"
+              :options="optionscol"
+              behavior="menu"
             >
+              <template #no-option>
+                <q-item>
+                  <q-item-section class="text-grey">
+                    No hay colaboradores
+                  </q-item-section>
+                </q-item>
+              </template>
               <template #append>
                 <q-icon name="event" color="black" />
               </template>
             </q-select>
           </div>
+        </div>
+        <div class="row">
           <div class="col">
             <q-select
               v-model="dispositivo"
@@ -102,6 +128,8 @@ const procesarFormulario = () => {
               outlined
             />
           </div>
+        </div>
+        <div class="row">
           <div class="col">
             <q-input
               v-model="diagnosticoTicket"

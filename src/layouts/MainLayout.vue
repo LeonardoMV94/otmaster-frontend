@@ -21,6 +21,12 @@ console.log("Admin?: ", isAdmin);
 
 const linksList = [
   {
+    title: "Test",
+    caption: "",
+    icon: "dashboard",
+    link: "test",
+  },
+  {
     title: "Dashboard",
     caption: "",
     icon: "dashboard",

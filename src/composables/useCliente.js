@@ -35,6 +35,7 @@ const useCliente = () => {
     updateCliente,
     deleteCliente,
     getClientes: computed(() => store.getClientes),
+    getOnlyRuts: computed(() => store.getOnlyRuts),
   };
 };
 

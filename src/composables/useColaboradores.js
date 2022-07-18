@@ -39,6 +39,7 @@ const useColaborador = () => {
     deleteColaborador,
     getColaboradores: computed(() => store.getColaboradores),
     getColaborador: computed(() => store.getColaborador),
+    getOnlyRutCol: computed(() => store.getOnlyRutCol),
   };
 };
 

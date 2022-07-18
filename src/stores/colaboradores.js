@@ -13,6 +13,7 @@ export const useColaboradoresStore = defineStore("Colaboradores", {
   getters: {
     getColaboradores: (state) => state.colaboradores,
     getColaborador: (state) => state.colaborador,
+    getOnlyRutCol: (state) => state.colaboradores.map((X) => X.rut_colaborador),
   },
   actions: {
     async getAllColaboradores() {

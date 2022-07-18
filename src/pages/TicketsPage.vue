@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from "vue";
 
-import FormTicket from "../components/FormTicket.vue";
+// import FormTicket from "../components/FormTicket.vue";
+import TableCrud from "../components/table/TableCrud.vue";
 
 const columns = [
   {
@@ -120,7 +121,8 @@ const removeRow = () => {
 </script>
 <template>
   <!--Acá Empieza el formulario-->
-  <FormTicket />
+  <!-- <FormTicket /> -->
+  <TableCrud />
   <!--Aca empieza la Q-table-->
   <div class="q-pa-lg" style="max-width: 1400px">
     <h4 class="text-center">Tickets Registrados</h4>

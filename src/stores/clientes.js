@@ -12,6 +12,7 @@ export const useClientesStore = defineStore("clientes", {
   }),
   getters: {
     getClientes: (state) => state.clientes,
+    getOnlyRuts: (state) => state.clientes.map((c) => c.rut_cliente),
   },
   actions: {
     async getAllClientes() {
