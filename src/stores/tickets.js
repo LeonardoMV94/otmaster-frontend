@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "boot/axios";
-import { Notify } from "quasar";
+import { createNotify } from "../utils/Notifications";
 import { useAuthStore } from "./auth";
 
 const auth = useAuthStore();
@@ -44,29 +44,14 @@ export const useTicketsStore = defineStore("tickets", {
         })
         .then((response) => {
           console.log(response.data.id_ticket);
-          Notify.create({
-            message: `Ticket ${response.data.id_ticket} creado exitosamente!`,
-            type: "positive",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(
+            `Ticket ${response.data.id_ticket} creado exitosamente!`,
+            "positive"
+          );
           console.log(response);
         })
         .catch((error) => {
-          Notify.create({
-            message: error.response.data,
-            type: "negative",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(error.response.data, "negative");
           console.log("Error", error.response.data.message);
         });
 
@@ -80,29 +65,14 @@ export const useTicketsStore = defineStore("tickets", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          Notify.create({
-            message: `Cliente ${response.data.id_ticket} actualizado exitosamente!`,
-            type: "positive",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(
+            `Cliente ${response.data.id_ticket} actualizado exitosamente!`,
+            "positive"
+          );
           console.log(response);
         })
         .catch((error) => {
-          Notify.create({
-            message: error.response.data.errors[0].message,
-            type: "negative",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(error.response.data.errors[0].message, "negative");
           console.log("Error", error.response.data.message);
         });
       this.getAllTickets();
@@ -114,39 +84,19 @@ export const useTicketsStore = defineStore("tickets", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(({ data }) => {
-          Notify.create({
-            message: `Ticket ${data.id} eliminado exitosamente!`,
-            type: "negative",
-            caption: "Cuidado al eliminar!",
-            progress: true,
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
-          this.clientes = this.clientes.filter(
-            (cli) => cli.id_ticket !== id_ticket
+          createNotify(`Ticket ${data.id} eliminado exitosamente!`, "negative");
+          console.log("antes ", this.tickets);
+          this.tickets = this.tickets.filter(
+            (ti) => ti.id_ticket !== id_ticket
           );
+          console.log("despues", this.tickets);
           console.log("deleteTicket ACTIONS: ", data);
         })
         .catch((error) => {
           console.log("deleteTicket ACTIONS: ", error.response.data.message);
-          Notify.create({
-            message: error.response.data.message,
-            type: "negative",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(error.response.data.message, "negative");
           console.log("Error", error.response.data.message);
         });
-
-      this.getAllTickets();
     },
   },
 });

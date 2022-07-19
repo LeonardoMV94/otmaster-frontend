@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onBeforeMount, onActivated } from "vue";
 import FormTicket from "components/FormTicket.vue";
-import createNotify from "../../utils/Notifications";
+import { createNotify } from "../../utils/Notifications";
 
 import useAuth from "../../composables/useAuth";
 import useTicket from "../../composables/useTickets";
