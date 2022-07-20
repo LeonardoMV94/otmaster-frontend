@@ -9,12 +9,12 @@ const useColaborador = () => {
   };
 
   const getColaboradorById = async (rut_colaborador) => {
-    await store.getColaboradorById(rut_colaborador);
+    await store.getColaboradoresById(rut_colaborador);
   };
 
   const createColaborador = async (ColaboradorObj) => {
     console.log("createColaborador useColaborador: ", ColaboradorObj);
-    await store.createColaborador(ColaboradorObj);
+    await store.createColaboradores(ColaboradorObj);
   };
 
   const updateColaborador = async (rut_colaborador, updateCol) => {
@@ -23,7 +23,7 @@ const useColaborador = () => {
       rut_colaborador,
       updateCol
     );
-    await store.updateColaborador(rut_colaborador, updateCol);
+    await store.updateColaboradores(rut_colaborador, updateCol);
   };
 
   const deleteColaborador = async (rut_colaborador) => {

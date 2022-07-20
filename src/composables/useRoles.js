@@ -35,6 +35,7 @@ const useRol = () => {
     deleteRol,
     getRoles: computed(() => store.getRoles),
     getRol: computed(() => store.getRol),
+    getRolestoSelect: computed(() => store.getRolesSelect),
   };
 };
 

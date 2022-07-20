@@ -13,6 +13,12 @@ export const useMarcasDispositivosStore = defineStore("MarcasDispositivos", {
   getters: {
     getMarcasDispositivos: (state) => state.marcasDispositivos,
     getMarcaDispositivo: (state) => state.marcaDispositivo,
+    getMDSelect: (state) =>
+      state.marcasDispositivos.map((m) => ({
+        ...m,
+        label: m.nombre_marca,
+        value: m.id_marca,
+      })),
   },
   actions: {
     async getAllMarcaDispositivos() {

@@ -7,6 +7,9 @@ const useTicket = () => {
   const getAllTickets = async () => {
     await store.getAllTickets();
   };
+  const getAllEstados = async () => {
+    await store.getEstadosTickets();
+  };
 
   const getTicketById = async (id_ticket) => {
     await store.getTicketById(id_ticket);
@@ -33,8 +36,10 @@ const useTicket = () => {
     createTicket,
     updateTicket,
     deleteTicket,
+    getAllEstados,
     getTickets: computed(() => store.getTickets),
     getTicket: computed(() => store.getTicket),
+    getEstadosTicket: computed(() => store.getEstados),
   };
 };
 

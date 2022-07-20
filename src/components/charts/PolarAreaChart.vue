@@ -1,14 +1,20 @@
 <script setup>
-let series = [14, 23, 10, 20];
+import useTickets from "../../composables/useTickets";
+const { getEstadosTicket } = useTickets();
+
+const mapList = getEstadosTicket.value.map((obj) => obj.cantidad);
+console.log("Estados Polar: ", mapList);
+
+let series = mapList;
 let chartOptions = {
   title: {
-    text: "Estado de Tickets",
+    text: "Estados de Tickets",
     align: "left",
   },
   chart: {
     type: "polarArea",
   },
-  labels: ["Entregado", "diagnosticado", "Recibido", "arreglado"],
+  labels: ["Abierto", "En Proceso", "Cerrado", "Cancelado"],
   stroke: {
     colors: ["#fff"],
   },

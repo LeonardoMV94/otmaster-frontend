@@ -35,6 +35,7 @@ const useTipoDispositivo = () => {
     deleteTipoDispositivo,
     getTiposDispositivos: computed(() => store.getTipoDispositivos),
     getTipoDispositivo: computed(() => store.getTipoDispositivo),
+    getTDtoSelects: computed(() => store.getTDtoSelect)
   };
 };
 

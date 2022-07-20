@@ -1,11 +1,23 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted } from "vue";
 
-const cliente = ref(["HOla soy un cliente"]);
+import PieChartVue from "src/components/charts/PieChart.vue";
+import CustomDataTable from "../components/charts/CustomDataTable.vue";
+import useTickets from "../composables/useTickets";
+const { getAllEstados } = useTickets();
+onMounted(() => {
+  (async () => {
+    console.log("mounted");
+    await getAllEstados();
+  })();
+});
 </script>
 
 <template>
-  <div>
-    {{ cliente }}
-  </div>
+  <q-page padding>
+    <div class="flex justify-center">
+      <CustomDataTable />
+      <PieChartVue />
+    </div>
+  </q-page>
 </template>

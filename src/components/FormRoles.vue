@@ -1,24 +1,16 @@
 <script setup>
 import { ref } from "vue";
+import useRoles from "../composables/useRoles";
 
-//aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)
+const { createRol } = useRoles();
 
-const idRol = ref(null);
 const nombreRol = ref(null);
-// alternativa a lo anterior
-// const clienteObj = ref({
-//   idCliente: 0,
-//   nombreCliente: '',
-//   apPatCliente: '',
-//   apMatCliente: '',
-//   correoCliente: '',
-//   telCliente: '',
-// })
-// y se llama en los v-model como clienteObj.idCliente
-
-//validaciones
 const procesarFormulario = () => {
-  console.log("Se envió prueba de formulario");
+  const rolObj = {
+    nombre_rol: nombreRol.value,
+  };
+  console.log(rolObj);
+  createRol(rolObj);
 };
 </script>
 
@@ -31,27 +23,14 @@ const procesarFormulario = () => {
         <div class="row">
           <div class="col">
             <q-input
-              v-model="idRol"
-              color="grey-3"
-              label-color="primary"
-              outlined
-              label="ID"
-              mask="##"
-              fill-mask
-            >
-              <template #append>
-                <q-icon name="badge" color="black" />
-              </template>
-            </q-input>
-          </div>
-          <div class="col">
-            <q-input
               v-model="nombreRol"
               label-color="primary"
               outlined
               label="Nombre del Rol"
-              mask="SSSSSSSSSSSSSSSSSSSS"
-              fill-mask
+              mask="SSSSSSSSSS"
+              unmasked-value
+              lazy-rules
+              :rules="[(val) => !!val || 'Se requiere que escriba un rol']"
             >
               <template #append>
                 <q-icon name="attribution" color="black" />

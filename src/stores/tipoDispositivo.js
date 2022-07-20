@@ -13,6 +13,12 @@ export const useTiposDispositivosStore = defineStore("tiposDispositivos", {
   getters: {
     getTipoDispositivos: (state) => state.tiposDispositivos,
     getTipoDispositivo: (state) => state.tipoDispositivo,
+    getTDtoSelect: (state) =>
+      state.tiposDispositivos.map((t) => ({
+        ...t,
+        label: t.nombre_tipo,
+        value: t.id_tipo,
+      })),
   },
   actions: {
     async getAllTipoDispositivos() {

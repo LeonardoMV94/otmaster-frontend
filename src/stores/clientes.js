@@ -57,7 +57,7 @@ export const useClientesStore = defineStore("clientes", {
         })
         .catch((error) => {
           Notify.create({
-            message: error.response.data.errors[0].message,
+            message: error.response.data.message,
             type: "negative",
             actions: [
               {

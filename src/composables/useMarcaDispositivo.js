@@ -35,6 +35,7 @@ const useMarcaDispositivo = () => {
     deleteMarcaDispositivo,
     getMarcasDispositivos: computed(() => store.getMarcasDispositivos),
     getMarcaDispositivo: computed(() => store.getMarcaDispositivo),
+    getMDtoSelect: computed(() => store.getMDSelect),
   };
 };
 

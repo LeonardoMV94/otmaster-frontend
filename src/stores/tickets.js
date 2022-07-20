@@ -9,10 +9,12 @@ export const useTicketsStore = defineStore("tickets", {
   state: () => ({
     tickets: [],
     ticket: {},
+    estados: [],
   }),
   getters: {
     getTickets: (state) => state.tickets,
     getTicket: (state) => state.ticket,
+    getEstados: (state) => state.estados,
   },
   actions: {
     async getAllTickets() {
@@ -35,6 +37,14 @@ export const useTicketsStore = defineStore("tickets", {
       });
       console.log(data);
       this.cliente = data;
+    },
+    async getEstadosTickets() {
+      const token = await auth.getToken;
+      const { data } = await api.get("tickets/estados/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("getEstados: ", data);
+      this.estados = data;
     },
     async createTicket(data) {
       const token = await auth.getToken;
@@ -69,6 +79,7 @@ export const useTicketsStore = defineStore("tickets", {
             `Cliente ${response.data.id_ticket} actualizado exitosamente!`,
             "positive"
           );
+          //this.tickets = this.tickets.map( t => t.id_ticket).indexOf(this.tickets.id_ticket)
           console.log(response);
         })
         .catch((error) => {

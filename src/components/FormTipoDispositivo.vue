@@ -1,48 +1,25 @@
 <script setup>
 import { ref } from "vue";
-//aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)
-
-const idTipoDispositivo = ref(null);
+import useTipoDispositivo from "src/composables/useTipoDispositivo";
 const tipoDispositivo = ref(null);
 
-// alternativa a lo anterior
-// const clienteObj = ref({
-//   idCliente: 0,
-//   nombreCliente: '',
-//   apPatCliente: '',
-//   apMatCliente: '',
-//   correoCliente: '',
-//   telCliente: '',
-// })
-// y se llama en los v-model como clienteObj.idCliente
+const { createTipoDispositivo } = useTipoDispositivo();
 
-//validaciones
 const procesarFormulario = () => {
-  console.log("Se envió prueba de formulario");
+  const tdObj = {
+    nombre_tipo: tipoDispositivo.value,
+  };
+  console.log("nuevo tipo dispositivo: ", tdObj);
+  createTipoDispositivo(tdObj);
 };
 </script>
 
 <template>
   <div class="q-pa-xl" style="max-width: 700px">
-    <h4 class="text-center">Agregar "Tipo de Dispositivo"</h4>
+    <h4 class="text-center">Agregar un tipo de dispositivo</h4>
     <q-card class="q-pa-md">
       <q-form @submit="procesarFormulario">
         <div class="row">
-          <div class="col">
-            <q-input
-              v-model="idTipoDispositivo"
-              color="grey-3"
-              label-color="primary"
-              outlined
-              label="ID"
-              mask="##"
-              fill-mask
-            >
-              <template #append>
-                <q-icon name="badge" color="black" />
-              </template>
-            </q-input>
-          </div>
           <div class="col">
             <q-input
               v-model="tipoDispositivo"
@@ -50,10 +27,14 @@ const procesarFormulario = () => {
               outlined
               label="Tipo Dispositivo"
               mask="SSSSSSSSSSSSSSSSSSSS"
-              fill-mask
+              unmasked-value
+              :rules="[
+                (val) =>
+                  !!val || 'Se requiere que escriba un tipo de dispositivo',
+              ]"
             >
               <template #append>
-                <q-icon name="smartphone" color="black" />
+                <q-icon name="devices_other" color="black" />
               </template>
             </q-input>
           </div>

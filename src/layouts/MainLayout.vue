@@ -24,7 +24,7 @@ const linksList = [
     title: "Dashboard",
     caption: "",
     icon: "dashboard",
-    link: "homeIndex",
+    link: "dashboard",
   },
   {
     title: "Ticket",

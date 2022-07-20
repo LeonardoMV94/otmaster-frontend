@@ -10,7 +10,12 @@ const routes = [
       {
         path: "",
         name: "homeIndex",
-        component: () => import("pages/IndexPage.vue"),
+        component: () => import("pages/IndexPageImg.vue"),
+      },
+      {
+        path: "dashboard",
+        name: "dashboard",
+        component: () => import("pages/DashboardPage.vue"),
       },
       {
         path: "clientes",

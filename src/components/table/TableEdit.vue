@@ -103,7 +103,7 @@ const deleteItem = async (value) => {
     console.log("no hay permisos");
     createNotify(
       "No tiene permisos de Administrador para eliminar",
-      "nevative"
+      "negative"
     );
   }
 };
@@ -229,7 +229,10 @@ onActivated(async () => {
             </div>
           </q-td>
           <q-td key="dispositivosIdDispositivo" :props="props">
-            {{ props.row.dispositivosIdDispositivo }}
+            {{ props.row.dispositivos.num_serie_dispositivo }}
+            <q-tooltip>
+              {{ props.row.dispositivos.modelo }}
+            </q-tooltip>
           </q-td>
           <q-td key="problema_ticket" :props="props">
             {{ props.row.problema_ticket }}

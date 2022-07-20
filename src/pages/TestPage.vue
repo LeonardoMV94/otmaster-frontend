@@ -1,9 +1,9 @@
 <script setup>
-import TableEdit from "components/table/TableEdit.vue";
+import FormTest from "../components/FormCliente.vue";
 </script>
 
 <template>
   <q-page>
-    <TableEdit />
+    <FormTest />
   </q-page>
 </template>

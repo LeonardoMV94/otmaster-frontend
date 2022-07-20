@@ -1,24 +1,16 @@
 <script setup>
 import { ref } from "vue";
+import useMarcaDispositivo from "src/composables/useMarcaDispositivo";
+const { createMarcaDispositivo } = useMarcaDispositivo();
 
-//aca van los v-model de los input del formulario, sin esto no se mantiene el texto en el input (se borraba con clickear otro lado)
-
-const idMarca = ref(null);
 const nombreMarca = ref(null);
-// alternativa a lo anterior
-// const clienteObj = ref({
-//   idCliente: 0,
-//   nombreCliente: '',
-//   apPatCliente: '',
-//   apMatCliente: '',
-//   correoCliente: '',
-//   telCliente: '',
-// })
-// y se llama en los v-model como clienteObj.idCliente
 
-//validaciones
 const procesarFormulario = () => {
-  console.log("Se envió prueba de formulario");
+  const marcaObj = {
+    nombre_marca: nombreMarca.value,
+  };
+  console.log("Form nombreMarca: ", marcaObj);
+  createMarcaDispositivo(marcaObj);
 };
 </script>
 
@@ -30,27 +22,13 @@ const procesarFormulario = () => {
         <div class="row">
           <div class="col">
             <q-input
-              v-model="idMarca"
-              color="grey-3"
-              label-color="primary"
-              outlined
-              label="ID"
-              mask="##"
-              fill-mask
-            >
-              <template #append>
-                <q-icon name="badge" color="black" />
-              </template>
-            </q-input>
-          </div>
-          <div class="col">
-            <q-input
               v-model="nombreMarca"
               label-color="primary"
               outlined
               label="Nombre Marca"
               mask="SSSSSSSSSSSSSSSSSSSS"
-              fill-mask
+              unmasked-value
+              :rules="[(val) => !!val || 'Se requiere que escriba una marca']"
             >
               <template #append>
                 <q-icon name="star" color="black" />

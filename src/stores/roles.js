@@ -13,6 +13,12 @@ export const useRolesStore = defineStore("roles", {
   getters: {
     getRoles: (state) => state.roles,
     getRol: (state) => state.rol,
+    getRolesSelect: (state) =>
+      state.roles.map((r) => ({
+        ...r,
+        label: r.nombre_rol,
+        value: r.id_rol,
+      })),
   },
   actions: {
     async getAllRoles() {
@@ -26,7 +32,7 @@ export const useRolesStore = defineStore("roles", {
       });
 
       console.log("getAllRoles ACTIONS: ", data);
-      this.Roles = data;
+      this.roles = data;
     },
     async getRolById(id_rol) {
       const token = await auth.getToken;
@@ -47,30 +53,10 @@ export const useRolesStore = defineStore("roles", {
             `Rol ${response.data.id_rol} creado exitosamente!`,
             "positive"
           );
-          // Notify.create({
-          //   message: `Rol ${response.data.id_rol} creado exitosamente!`,
-          //   type: "positive",
-          //   actions: [
-          //     {
-          //       label: "Cerrar",
-          //       color: "white",
-          //     },
-          //   ],
-          // });
           console.log(response);
         })
         .catch((error) => {
           createNotify(error.response.data.errors[0].message, "negative");
-          // Notify.create({
-          //   message: error.response.data.errors[0].message,
-          //   type: "negative",
-          //   actions: [
-          //     {
-          //       label: "Cerrar",
-          //       color: "white",
-          //     },
-          //   ],
-          // });
           console.log("Error", error.response.data.message);
         });
 
@@ -88,30 +74,11 @@ export const useRolesStore = defineStore("roles", {
             `Rol ${response.data.id_rol} actualizado exitosamente!`,
             "positive"
           );
-          // Notify.create({
-          //   message: `Rol ${response.data.id_rol} actualizado exitosamente!`,
-          //   type: "positive",
-          //   actions: [
-          //     {
-          //       label: "Cerrar",
-          //       color: "white",
-          //     },
-          //   ],
-          // });
           console.log(response);
         })
         .catch((error) => {
           createNotify(error.response.data.errors[0].message, "negative");
-          // Notify.create({
-          //   message: error.response.data.errors[0].message,
-          //   type: "negative",
-          //   actions: [
-          //     {
-          //       label: "Cerrar",
-          //       color: "white",
-          //     },
-          //   ],
-          // });
+
           console.log("Error", error.response.data.message);
         });
       this.getAllRoles();
@@ -124,34 +91,12 @@ export const useRolesStore = defineStore("roles", {
         })
         .then(({ data }) => {
           createNotify(`Rol ${data} eliminado exitosamente!`, "positive");
-          // Notify.create({
-          //   message: `Rol ${data} eliminado exitosamente!`,
-          //   type: "negative",
-          //   caption: "Cuidado al eliminar!",
-          //   progress: true,
-          //   actions: [
-          //     {
-          //       label: "Cerrar",
-          //       color: "white",
-          //     },
-          //   ],
-          // });
           this.roles = this.roles.filter((cli) => cli.id_rol !== id_rol);
           console.log("deleteRol ACTIONS: ", data);
         })
         .catch((error) => {
           console.log("deleteRol ACTIONS: ", error.response.data.message);
           createNotify(error.response.data.message, "negative");
-          // Notify.create({
-          //   message: error.response.data.message,
-          //   type: "negative",
-          //   actions: [
-          //     {
-          //       label: "Cerrar",
-          //       color: "white",
-          //     },
-          //   ],
-          // });
           console.log("Error", error.response.data.message);
         });
 

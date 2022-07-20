@@ -2,9 +2,9 @@
 import { ref, onMounted } from "vue";
 
 import useCliente from "../composables/useCliente";
-import PolarAreaChart from "components/charts/PolarAreaChart.vue";
+import useTickets from "../composables/useTickets";
 import PieChartVue from "src/components/charts/PieChart.vue";
-import LineChartVue from "src/components/charts/LineChart.vue";
+import CustomDataTable from "../components/charts/CustomDataTable.vue";
 
 const {
   getAllClientes,
@@ -13,6 +13,7 @@ const {
   // deleteCliente,
   getClientes,
 } = useCliente();
+const { getAllEstados } = useTickets();
 
 //const clientes = getClientes;
 const separator = ref("vertical");
@@ -96,6 +97,7 @@ onMounted(() => {
   (async () => {
     console.log("mounted");
     await getAllClientes();
+    await getAllEstados();
     // await createCliente(createCli);  DONE
     // await updateCliente(updateCli); DONE
     // await deleteCliente(deleteCli); done
@@ -105,10 +107,9 @@ onMounted(() => {
 
 <template>
   <q-page padding>
-    <div class="flex">
-      <PolarAreaChart />
+    <div class="flex justify-center">
+      <CustomDataTable />
       <PieChartVue />
-      <LineChartVue />
     </div>
 
     <template v-if="!getClientes">
