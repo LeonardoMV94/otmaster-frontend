@@ -5,7 +5,7 @@ const useMarcaDispositivo = () => {
   const store = useMarcasDispositivosStore();
 
   const getAllMarcaDispositivos = async () => {
-    await store.getAllMarcaDispositivos();
+    await store.getAllsMarcaDispositivos();
   };
 
   const getMarcaDispositivoById = async (id_marca) => {

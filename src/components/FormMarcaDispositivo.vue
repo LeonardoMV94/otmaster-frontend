@@ -15,9 +15,9 @@ const procesarFormulario = () => {
 </script>
 
 <template>
-  <div class="q-pa-xl" style="max-width: 700px">
-    <h4 class="text-center">Agregar Marca de Dispositivo</h4>
+  <div style="width: 700px; max-width: 80vw">
     <q-card class="q-pa-md">
+      <h4 class="text-center">Agregar Marca de Dispositivo</h4>
       <q-form @submit="procesarFormulario">
         <div class="row">
           <div class="col">

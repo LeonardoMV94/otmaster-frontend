@@ -21,7 +21,7 @@ export const useMarcasDispositivosStore = defineStore("MarcasDispositivos", {
       })),
   },
   actions: {
-    async getAllMarcaDispositivos() {
+    async getAllsMarcaDispositivos() {
       const token = await auth.getToken;
       if (token == "") {
         return this.marcasDispositivos;
@@ -29,7 +29,7 @@ export const useMarcasDispositivosStore = defineStore("MarcasDispositivos", {
       const { data } = await api.get("/marcas-dispositivos/", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("getAllMarcaDispositivos ACTIONS: ", data);
+      console.log("getAllsMarcaDispositivos ACTIONS: ", data);
       this.marcasDispositivos = data;
     },
     async getMarcaDispositivoById(id_marca) {
@@ -58,18 +58,18 @@ export const useMarcasDispositivosStore = defineStore("MarcasDispositivos", {
           console.log("Error", error.response.data.message);
         });
 
-      this.getAllMarcasDispositivos();
+      this.getAllsMarcaDispositivos();
     },
-    async updateMarcaDispositivo(id_tipo, data) {
+    async updateMarcaDispositivo(id_marca, data) {
       const token = await auth.getToken;
-      console.log("updateMD actions:", id_tipo, data);
+      console.log("updateMD actions:", id_marca, data);
       await api
-        .put(`marcas-dispositivos/update/${id_tipo}`, data, {
+        .patch(`marcas-dispositivos/update/${id_marca}`, data, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
           createNotify(
-            `Tipo Dispositivo ${response.data.id_marca} actualizado exitosamente!`,
+            `Marca Dispositivo ${response.data.id_marca} actualizado exitosamente!`,
             "positive"
           );
           console.log(response);
@@ -78,7 +78,7 @@ export const useMarcasDispositivosStore = defineStore("MarcasDispositivos", {
           createNotify(error.response.data.errors[0].message, "negative");
           console.log("Error", error.response.data.message);
         });
-      this.getAllMarcaDispositivos();
+      this.getAllsMarcaDispositivos();
     },
     async deleteMarcaDispositivo(id_marca) {
       const token = await auth.getToken;
@@ -88,10 +88,12 @@ export const useMarcasDispositivosStore = defineStore("MarcasDispositivos", {
         })
         .then(({ data }) => {
           createNotify(
-            `Tipo Dispositivo ${data} eliminado exitosamente!`,
+            `Tipo Dispositivo ${data.id_marca} eliminado exitosamente!`,
             "positive"
           );
-          this.roles = this.roles.filter((cli) => cli.id_marca !== id_marca);
+          this.marcasDispositivos = this.marcasDispositivos.filter(
+            (cli) => cli.id_marca !== id_marca
+          );
           console.log("deleteMD ACTIONS: ", data);
         })
         .catch((error) => {
@@ -100,7 +102,7 @@ export const useMarcasDispositivosStore = defineStore("MarcasDispositivos", {
           console.log("Error", error.response.data.message);
         });
 
-      this.getAllMarcaDispositivos();
+      this.getAllsMarcaDispositivos();
     },
   },
 });
