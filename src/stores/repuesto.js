@@ -45,6 +45,26 @@ export const useRepuestosStore = defineStore("repuestos", {
 
       this.getAllRepuestos();
     },
+    async updateRepuesto(id_repuesto, updateObj) {
+      const token = auth.getToken;
+      console.log("updateRepuesto actions:", id_repuesto, updateObj);
+      await api
+        .patch(`repuestos/${id_repuesto}`, updateObj, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          createNotify(
+            `Repuesto ${response.data.id_repuesto} actualizado exitosamente!`,
+            "positive"
+          );
+          console.log(response);
+        })
+        .catch((error) => {
+          createNotify(error.response.data.errors[0].message, "negative");
+          console.log("Error", error.response.data.message);
+        });
+      this.getAllRepuestos();
+    },
     async deleteRepuesto(id_repuesto) {
       const token = auth.getToken;
       await api
@@ -53,7 +73,7 @@ export const useRepuestosStore = defineStore("repuestos", {
         })
         .then(({ data }) => {
           createNotify(
-            `Repuesto ${data.id} eliminado exitosamente!`,
+            `Repuesto ${data.id_repuesto} eliminado exitosamente!`,
             "negative"
           );
           console.log("antes ", this.repuestos);
