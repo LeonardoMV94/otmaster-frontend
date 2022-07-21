@@ -46,6 +46,7 @@ const useTicket = () => {
     getTicket: computed(() => store.getTicket),
     getEstadosTicket: computed(() => store.getEstados),
     getCountAllRepuestos: computed(() => store.getCountRepuestoss),
+    getEstadosSelects: computed(() => store.getEstadosSelect),
   };
 };
 

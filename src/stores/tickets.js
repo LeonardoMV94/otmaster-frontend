@@ -16,6 +16,12 @@ export const useTicketsStore = defineStore("tickets", {
     getTickets: (state) => state.tickets,
     getTicket: (state) => state.ticket,
     getEstados: (state) => state.estados,
+    getEstadosSelect: (state) =>
+      state.estados.map((e) => ({
+        ...e,
+        label: e.tipo,
+        value: e.id,
+      })),
     getCountRepuestoss: (state) => state.countRepuestos,
   },
   actions: {

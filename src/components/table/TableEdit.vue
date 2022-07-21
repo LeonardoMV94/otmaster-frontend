@@ -14,7 +14,14 @@ const FormTicket = defineAsyncComponent(() =>
 const { isAdmin } = useAuth();
 const { getClienteByRut } = useCliente();
 const { getAllColaboradores, getColabByRut } = useColaborador();
-const { getAllTickets, deleteTicket, getTickets, updateTicket } = useTicket();
+const {
+  getAllTickets,
+  deleteTicket,
+  getTickets,
+  updateTicket,
+  getAllEstados,
+  getEstadosSelects,
+} = useTicket();
 
 let showDialog = ref(false);
 let confirm = ref(false);
@@ -120,6 +127,13 @@ const editarItemResolucion = async (id, value) => {
   console.log("editarItemResolucion", id, resObj);
   await updateTicket(id, resObj);
 };
+const editarItemEstado = async (id, value) => {
+  const esObj = {
+    estado_ticket: value,
+  };
+  console.log("editarItemResolucion", id, esObj);
+  await updateTicket(id, esObj);
+};
 const deleteItem = async (value) => {
   if (isAdmin) {
     console.log("delete permitido", value);
@@ -156,6 +170,7 @@ const estados = [
 const init = async () => {
   await getAllTickets();
   await getAllColaboradores();
+  await getAllEstados();
 };
 onBeforeMount(async () => {
   await init();
@@ -313,6 +328,33 @@ onActivated(async () => {
           <q-td key="estado_ticket" :props="props">
             <q-badge :color="estados[props.row.estado_ticket - 1].color">
               {{ estados[props.row.estado_ticket - 1].estado }}
+              <q-popup-edit
+                v-slot="scope"
+                v-model="props.estado_ticket"
+                title="Editar estado de ticket"
+                buttons
+                persistent
+                @save="
+                  (val) => editarItemEstado(props.row.id_ticket, val.value)
+                "
+              >
+                <q-select
+                  v-model="scope.value"
+                  outlined
+                  label-color="primary"
+                  input-debounce="0"
+                  map-options
+                  behavior="menu"
+                  :options="getEstadosSelects"
+                  ><template #no-option>
+                    <q-item>
+                      <q-item-section class="text-grey">
+                        No hay estados
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                </q-select>
+              </q-popup-edit>
             </q-badge>
           </q-td>
           <q-td key="items.repuesto" :props="props">
