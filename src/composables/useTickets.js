@@ -11,6 +11,10 @@ const useTicket = () => {
     await store.getEstadosTickets();
   };
 
+  const getAllCountRepuestos = async () => {
+    await store.getCountRepuestos();
+  };
+
   const getTicketById = async (id_ticket) => {
     await store.getTicketById(id_ticket);
   };
@@ -37,9 +41,11 @@ const useTicket = () => {
     updateTicket,
     deleteTicket,
     getAllEstados,
+    getAllCountRepuestos,
     getTickets: computed(() => store.getTickets),
     getTicket: computed(() => store.getTicket),
     getEstadosTicket: computed(() => store.getEstados),
+    getCountAllRepuestos: computed(() => store.getCountRepuestoss),
   };
 };
 

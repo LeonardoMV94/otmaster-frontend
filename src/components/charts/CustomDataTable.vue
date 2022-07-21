@@ -1,7 +1,14 @@
 <script setup>
+import { onActivated, onBeforeMount } from "vue";
+import useTicket from "src/composables/useTickets";
+const { getAllCountRepuestos, getCountAllRepuestos } = useTicket();
+console.log(getCountAllRepuestos.value);
+const ser = getCountAllRepuestos.value.map((obj) => parseInt(obj.count));
+const cate = getCountAllRepuestos.value.map((obj) => obj.repuesto);
+console.log("series y categorias: ", ser, cate);
 const series = [
   {
-    data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380],
+    data: ser,
   },
 ];
 const chartOptions = {
@@ -50,18 +57,7 @@ const chartOptions = {
     colors: ["#fff"],
   },
   xaxis: {
-    categories: [
-      "South Korea",
-      "Canada",
-      "United Kingdom",
-      "Netherlands",
-      "Italy",
-      "France",
-      "Japan",
-      "United States",
-      "China",
-      "India",
-    ],
+    categories: cate,
   },
   yaxis: {
     labels: {
@@ -91,6 +87,15 @@ const chartOptions = {
     },
   },
 };
+const init = async () => {
+  await getAllCountRepuestos();
+};
+onActivated(async () => {
+  await init();
+});
+onBeforeMount(async () => {
+  await init();
+});
 </script>
 
 <template>

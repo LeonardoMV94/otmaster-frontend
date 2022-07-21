@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, defineAsyncComponent } from "vue";
+import { onMounted, defineAsyncComponent, onActivated } from "vue";
 import useTickets from "../composables/useTickets";
 
 const Pie = defineAsyncComponent(() =>
@@ -10,13 +10,18 @@ const CustomTable = defineAsyncComponent(() =>
   import("../components/charts/CustomDataTable.vue")
 );
 
-const { getAllEstados } = useTickets();
+const { getAllEstados, getAllCountRepuestos } = useTickets();
 
-onMounted(() => {
-  (async () => {
-    console.log("mounted");
-    await getAllEstados();
-  })();
+const init = async () => {
+  await getAllEstados();
+  await getAllCountRepuestos();
+};
+
+onMounted(async () => {
+  await init();
+});
+onActivated(async () => {
+  await init();
 });
 </script>
 

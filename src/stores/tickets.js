@@ -10,11 +10,13 @@ export const useTicketsStore = defineStore("tickets", {
     tickets: [],
     ticket: {},
     estados: [],
+    countRepuestos: [],
   }),
   getters: {
     getTickets: (state) => state.tickets,
     getTicket: (state) => state.ticket,
     getEstados: (state) => state.estados,
+    getCountRepuestoss: (state) => state.countRepuestos,
   },
   actions: {
     async getAllTickets() {
@@ -37,6 +39,14 @@ export const useTicketsStore = defineStore("tickets", {
       });
       console.log(data);
       this.cliente = data;
+    },
+    async getCountRepuestos() {
+      const token = await auth.getToken;
+      const { data } = await api.get("tickets/countrepuestos/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("getCountRepuestos: ", data);
+      this.countRepuestos = data;
     },
     async getEstadosTickets() {
       const token = await auth.getToken;
