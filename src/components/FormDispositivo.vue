@@ -40,7 +40,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="q-pa-lg" style="max-width: 700px">
+  <div style="width: 700px; max-width: 80vw">
     <q-card class="q-pa-md">
       <h4 class="text-center">Agregar un Dispositivo</h4>
 

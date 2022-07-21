@@ -66,12 +66,12 @@ export const useDispositivosStore = defineStore("Dispositivos", {
       const token = await auth.getToken;
       console.log("updateDispositivo actions:", id_dispositivo, data);
       await api
-        .put(`dispositivos/update/${id_dispositivo}`, data, {
+        .patch(`dispositivos/update/${id_dispositivo}`, data, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
           createNotify(
-            `Tipo Dispositivo ${response.data.id_rol} actualizado exitosamente!`,
+            `Tipo Dispositivo ${response.data.id_dispositivo} actualizado exitosamente!`,
             "positive"
           );
           console.log(response);
@@ -90,10 +90,10 @@ export const useDispositivosStore = defineStore("Dispositivos", {
         })
         .then(({ data }) => {
           createNotify(
-            `Tipo Dispositivo ${data} eliminado exitosamente!`,
+            `Tipo Dispositivo ${data.id_dispositivo} eliminado exitosamente!`,
             "positive"
           );
-          this.roles = this.roles.filter(
+          this.dispositivos = this.dispositivos.filter(
             (cli) => cli.id_dispositivo !== id_dispositivo
           );
           console.log("deleteDispositivo ACTIONS: ", data);

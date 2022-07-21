@@ -248,9 +248,9 @@ onActivated(async () => {
             </div>
           </q-td>
           <q-td key="dispositivosIdDispositivo" :props="props">
-            {{ props.row.dispositivos.num_serie_dispositivo }}
+            {{ props.row.dispositivos?.num_serie_dispositivo || "Nulo" }}
             <q-tooltip>
-              {{ props.row.dispositivos.modelo }}
+              {{ props.row.dispositivos?.modelo || "Nulo" }}
             </q-tooltip>
           </q-td>
           <q-td key="problema_ticket" :props="props">
@@ -316,7 +316,7 @@ onActivated(async () => {
             </q-badge>
           </q-td>
           <q-td key="items.repuesto" :props="props">
-            {{ props.row.items.map(r => r.repuesto) }}
+            {{ props.row.items.map((r) => r.repuesto) }}
           </q-td>
           <q-td key="acciones" :props="props">
             <q-btn

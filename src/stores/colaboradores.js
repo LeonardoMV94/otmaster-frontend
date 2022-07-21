@@ -85,6 +85,13 @@ export const useColaboradoresStore = defineStore("Colaboradores", {
     },
     async deleteColaborador(rut_colaborador) {
       const token = auth.getToken;
+      if (rut_colaborador == 10111222) {
+        createNotify(
+          "El usuario SuperAdmin no se puede eliminar!!",
+          "regative"
+        );
+        return;
+      }
       await api
         .delete(`colaboradores/delete/${rut_colaborador}`, {
           headers: { Authorization: `Bearer ${token}` },
