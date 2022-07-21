@@ -31,8 +31,8 @@ const isValidEmail = (mail) => {
 </script>
 
 <template>
-  <div class="q-pa-md" style="max-width: 700px">
-    <q-card class="q-pa-sm">
+  <div style="width: 700px; max-width: 80vw">
+    <q-card class="q-pa-md">
       <h4 class="text-center">Agregar un Cliente</h4>
 
       <q-form @submit.prevent="procesarFormulario">

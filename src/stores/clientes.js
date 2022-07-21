@@ -120,7 +120,7 @@ export const useClientesStore = defineStore("clientes", {
         })
         .then(({ data }) => {
           Notify.create({
-            message: `Cliente ${data} eliminado exitosamente!`,
+            message: `Cliente ${data.rut_cliente} eliminado exitosamente!`,
             type: "negative",
             caption: "Cuidado al eliminar!",
             progress: true,
