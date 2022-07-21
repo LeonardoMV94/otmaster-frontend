@@ -15,7 +15,7 @@ const procesarFormulario = () => {
 </script>
 
 <template>
-  <div class="q-pa-xl" style="max-width: 700px">
+  <div style="width: 700px; max-width: 80vw">
     <q-card class="q-pa-md">
       <h4 class="text-center">Administración de Roles</h4>
 
@@ -31,6 +31,7 @@ const procesarFormulario = () => {
               unmasked-value
               lazy-rules
               counter
+              clearable
               :rules="[(val) => !!val || 'Se requiere que escriba un rol']"
             >
               <template #append>

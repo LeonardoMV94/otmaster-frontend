@@ -66,7 +66,7 @@ export const useRolesStore = defineStore("roles", {
       const token = await auth.getToken;
       console.log("updateRol actions:", id_rol, data);
       await api
-        .put(`roles/update/${id_rol}`, data, {
+        .patch(`roles/${id_rol}`, data, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
@@ -85,6 +85,10 @@ export const useRolesStore = defineStore("roles", {
     },
     async deleteRol(id_rol) {
       const token = await auth.getToken;
+      if (id_rol == 1) {
+        createNotify("Rol administrador no se puede eliminar !!", "negative");
+        return;
+      }
       await api
         .delete(`roles/delete/${id_rol}`, {
           headers: { Authorization: `Bearer ${token}` },
