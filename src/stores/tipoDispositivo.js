@@ -69,7 +69,7 @@ export const useTiposDispositivosStore = defineStore("tiposDispositivos", {
         })
         .then((response) => {
           createNotify(
-            `Tipo Dispositivo ${response.data.id_rol} actualizado exitosamente!`,
+            `Tipo Dispositivo ${response.data.id_tipo} actualizado exitosamente!`,
             "positive"
           );
           console.log(response);
@@ -78,7 +78,7 @@ export const useTiposDispositivosStore = defineStore("tiposDispositivos", {
           createNotify(error.response.data.errors[0].message, "negative");
           console.log("Error", error.response.data.message);
         });
-      this.getAllRoles();
+      this.getAllTipoDispositivos();
     },
     async deleteTD(id_tipo) {
       const token = await auth.getToken;
@@ -88,10 +88,12 @@ export const useTiposDispositivosStore = defineStore("tiposDispositivos", {
         })
         .then(({ data }) => {
           createNotify(
-            `Tipo Dispositivo ${data} eliminado exitosamente!`,
+            `Tipo Dispositivo ${data.id_tipo} eliminado exitosamente!`,
             "positive"
           );
-          this.roles = this.roles.filter((cli) => cli.id_tipo !== id_tipo);
+          this.tiposDispositivos = this.tiposDispositivos.filter(
+            (cli) => cli.id_tipo !== id_tipo
+          );
           console.log("deleteTD ACTIONS: ", data);
         })
         .catch((error) => {

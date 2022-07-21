@@ -19,12 +19,12 @@ const useTipoDispositivo = () => {
 
   const updateTipoDispositivo = async (id_tipo, updateCol) => {
     console.log("updateTipoDispositivo", id_tipo, updateCol);
-    await store.updateTipoDispositivo(id_tipo, updateCol);
+    await store.updateTD(id_tipo, updateCol);
   };
 
   const deleteTipoDispositivo = async (id_tipo) => {
     console.log("deleteTipoDispositivo useTipoDispositivo: ", id_tipo);
-    await store.deleteTipoDispositivo(id_tipo);
+    await store.deleteTD(id_tipo);
   };
 
   return {
@@ -35,7 +35,7 @@ const useTipoDispositivo = () => {
     deleteTipoDispositivo,
     getTiposDispositivos: computed(() => store.getTipoDispositivos),
     getTipoDispositivo: computed(() => store.getTipoDispositivo),
-    getTDtoSelects: computed(() => store.getTDtoSelect)
+    getTDtoSelects: computed(() => store.getTDtoSelect),
   };
 };
 
