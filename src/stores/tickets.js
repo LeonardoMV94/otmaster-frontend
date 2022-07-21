@@ -71,12 +71,12 @@ export const useTicketsStore = defineStore("tickets", {
       const token = auth.getToken;
       console.log("updateticket actions:", id_ticket, data);
       await api
-        .put(`tickets/update/${id_ticket}`, data, {
+        .patch(`tickets/update/${id_ticket}`, data, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
           createNotify(
-            `Cliente ${response.data.id_ticket} actualizado exitosamente!`,
+            `Ticket ${response.data.id_ticket} actualizado exitosamente!`,
             "positive"
           );
           //this.tickets = this.tickets.map( t => t.id_ticket).indexOf(this.tickets.id_ticket)

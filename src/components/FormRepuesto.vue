@@ -27,7 +27,13 @@ const procesarFormulario = () => {
               outlined
               label="Nombre del Repuesto"
               lazy-rules
-              :rules="[(val) => !!val || 'Se requiere que escriba un repuesto']"
+              counter
+              clearable
+              :rules="[
+                (val) => !!val || 'Se requiere que escriba un repuesto',
+                (val) => val.length <= 25 || `Máximo 25 carácteres`,
+                (val) => val.length >= 4 || `Mínimo 4 carácteres`,
+              ]"
             >
               <template #append>
                 <q-icon name="build_circle" color="black" />

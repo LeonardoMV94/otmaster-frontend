@@ -1,7 +1,6 @@
 <script setup>
-import ot from "../assets/OT.png";
+ import ot from "../assets/OT.png";
 </script>
-
 <template>
   <q-page padding>
     <div class="flex justify-center">

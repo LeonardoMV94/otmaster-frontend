@@ -36,6 +36,7 @@ const useDispositivo = () => {
     getDispositivos: computed(() => store.getDispositivos),
     getDispositivo: computed(() => store.getDispositivo),
     getOnlyIdDispositivos: computed(() => store.getOnlyIdDispositivos),
+    getDispositivosSelect: computed(() => store.getDispositivosSelect),
   };
 };
 

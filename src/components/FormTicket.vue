@@ -6,13 +6,11 @@ import useColaborador from "../composables/useColaboradores";
 import useDispositivo from "../composables/useDispositivo";
 import useTicket from "../composables/useTickets";
 
-const { getAllClientes, getOnlyRuts } = useCliente();
-const { getAllColaboradores, getOnlyRutCol } = useColaborador();
-const { getAllDispositivos, getOnlyIdDispositivos } = useDispositivo();
+const { getAllClientes, getClientesSelect } = useCliente();
+const { getAllColaboradores, getColaboradoresSelect } = useColaborador();
+const { getAllDispositivos, getDispositivosSelect } = useDispositivo();
 const { createTicket } = useTicket();
 
-// TODO:_ añadir useDispositivo con get by id u otro
-//añadir popUp de edición de problema , diag y resol
 onBeforeMount(async () => {
   await init();
 });
@@ -28,14 +26,14 @@ const init = async () => {
 // solucion repuestos multiples, single multiple selections
 // https://quasar.dev/vue-components/select
 
-const optionscli = getOnlyRuts.value;
+const optionscli = getClientesSelect.value;
 const rut_cliente = ref(null);
 
-const optionscol = getOnlyRutCol.value;
+const optionscol = getColaboradoresSelect.value;
 const rut_colaborador = ref(null);
 
 const id_dispositivo = ref(null);
-const optionsdis = getOnlyIdDispositivos.value;
+const optionsdis = getDispositivosSelect.value;
 const problema_ticket = ref(null);
 // const resolucion_ticket = ref(null);
 // const diagnostico_ticket = ref(null);

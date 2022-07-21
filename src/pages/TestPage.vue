@@ -1,5 +1,5 @@
 <script setup>
-import FormTest from "../components/FormCliente.vue";
+import FormTest from "../components/table/TableEdit.vue";
 </script>
 
 <template>

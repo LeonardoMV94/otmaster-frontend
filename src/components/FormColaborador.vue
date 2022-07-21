@@ -12,6 +12,7 @@ const apPatColaborador = ref(null);
 const apMatColaborador = ref(null);
 const passColaborador = ref(null);
 const rolColaborador = ref(null);
+const passColaboradorRep = ref(null);
 
 const isPwd = ref(true);
 const options = getRolestoSelect.value;
@@ -39,7 +40,7 @@ onActivated(async () => {
 </script>
 
 <template>
-  <div class="q-pa-lg" style="max-width: 700px">
+  <div style="width: 700px; max-width: 80vw">
     <q-card class="q-pa-md">
       <h4 class="text-center">Agregar un Colaborador</h4>
 
@@ -149,9 +150,11 @@ onActivated(async () => {
               label-color="primary"
               :type="isPwd ? 'password' : 'text'"
               label="Contraseña Colaborador"
+              count
               clearable
               :rules="[
                 (val) => !!val || 'Se requiere que escriba una contraseña',
+                (val) => val.length > 7 || 'Minimo 8 carácteres',
               ]"
             >
               <template #append>
@@ -162,21 +165,33 @@ onActivated(async () => {
                 />
               </template>
             </q-input>
-            <!-- <q-input
-              v-model="passColaborador"
-              type="password"
-              label-color="primary"
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-input
+              v-model="passColaboradorRep"
               outlined
-              label="Contraseña Colaborador"
+              label-color="primary"
+              :type="isPwd ? 'password' : 'text'"
+              label="Repita Contraseña Colaborador"
+              lazy-rules
               clearable
+              count
               :rules="[
                 (val) => !!val || 'Se requiere que escriba una contraseña',
+                (val) =>
+                  val === passColaborador || 'Las contraseñas deben coincidir',
               ]"
             >
               <template #append>
-                <q-icon name="lock" color="black" />
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
               </template>
-            </q-input> -->
+            </q-input>
           </div>
         </div>
 

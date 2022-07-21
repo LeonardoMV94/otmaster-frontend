@@ -27,9 +27,10 @@ const procesarFormulario = () => {
               label-color="primary"
               outlined
               label="Nombre del Rol"
-              mask="SSSSSSSSSS"
+              mask="SSSSSSSSSSSSSSSSSSSS"
               unmasked-value
               lazy-rules
+              counter
               :rules="[(val) => !!val || 'Se requiere que escriba un rol']"
             >
               <template #append>

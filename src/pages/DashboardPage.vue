@@ -1,10 +1,17 @@
 <script setup>
-import { onMounted } from "vue";
-
-import PieChartVue from "src/components/charts/PieChart.vue";
-import CustomDataTable from "../components/charts/CustomDataTable.vue";
+import { onMounted, defineAsyncComponent } from "vue";
 import useTickets from "../composables/useTickets";
+
+const Pie = defineAsyncComponent(() =>
+  import("src/components/charts/PieChart.vue")
+);
+
+const CustomTable = defineAsyncComponent(() =>
+  import("../components/charts/CustomDataTable.vue")
+);
+
 const { getAllEstados } = useTickets();
+
 onMounted(() => {
   (async () => {
     console.log("mounted");
@@ -16,8 +23,8 @@ onMounted(() => {
 <template>
   <q-page padding>
     <div class="flex justify-center">
-      <CustomDataTable />
-      <PieChartVue />
+      <CustomTable />
+      <Pie />
     </div>
   </q-page>
 </template>

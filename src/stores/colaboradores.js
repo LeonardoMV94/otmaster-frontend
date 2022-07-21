@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "boot/axios";
-import { Notify } from "quasar";
+import { createNotify } from "../utils/Notifications";
 import { useAuthStore } from "./auth";
 
 const auth = useAuthStore();
@@ -14,6 +14,12 @@ export const useColaboradoresStore = defineStore("Colaboradores", {
     getColaboradores: (state) => state.colaboradores,
     getColaborador: (state) => state.colaborador,
     getOnlyRutCol: (state) => state.colaboradores.map((X) => X.rut_colaborador),
+    getColaboradoresSelect: (state) =>
+      state.colaboradores.map((m) => ({
+        ...m,
+        label: `${m.nombre_colaborador} ${m.appat_colaborador} ${m.apmat_colaborador}`,
+        value: m.rut_colaborador,
+      })),
   },
   actions: {
     async getAllColaboradores() {
@@ -44,29 +50,14 @@ export const useColaboradoresStore = defineStore("Colaboradores", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          Notify.create({
-            message: `Colaborador ${response.data.rut_colaborador} creado exitosamente!`,
-            type: "positive",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(
+            `Colaborador ${response.data.rut_colaborador} creado exitosamente!`,
+            "positive"
+          );
           console.log(response);
         })
         .catch((error) => {
-          Notify.create({
-            message: error.response.data.errors[0].message,
-            type: "negative",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(error.response.data.errors[0].message, "negative");
           console.log("Error", error.response.data.message);
         });
 
@@ -76,33 +67,18 @@ export const useColaboradoresStore = defineStore("Colaboradores", {
       const token = await auth.getToken;
       console.log("updateColaboradores actions:", rut_colaborador, data);
       await api
-        .put(`colaboradores/update/${rut_colaborador}`, data, {
+        .patch(`colaboradores/${rut_colaborador}`, data, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          Notify.create({
-            message: `Colaborador ${response.data.rut_cliente} actualizado exitosamente!`,
-            type: "positive",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(
+            `Colaborador ${response.data.rut_cliente} actualizado exitosamente!`,
+            "positive"
+          );
           console.log(response);
         })
         .catch((error) => {
-          Notify.create({
-            message: error.response.data.errors[0].message,
-            type: "negative",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(error.response.data.errors[0].message, "negative");
           console.log("Error", error.response.data.message);
         });
       this.getAllColaboradores();
@@ -114,18 +90,10 @@ export const useColaboradoresStore = defineStore("Colaboradores", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(({ data }) => {
-          Notify.create({
-            message: `Colaborador ${data} eliminado exitosamente!`,
-            type: "negative",
-            caption: "Cuidado al eliminar!",
-            progress: true,
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(
+            `Colaborador ${data.rut_colaborador} eliminado exitosamente!`,
+            "negative"
+          );
           this.colaboradores = this.colaboradores.filter(
             (cli) => cli.rut_colaborador !== rut_colaborador
           );
@@ -136,16 +104,7 @@ export const useColaboradoresStore = defineStore("Colaboradores", {
             "deleteColaborador ACTIONS: ",
             error.response.data.message
           );
-          Notify.create({
-            message: error.response.data.message,
-            type: "negative",
-            actions: [
-              {
-                label: "Cerrar",
-                color: "white",
-              },
-            ],
-          });
+          createNotify(error.response.data.message, "negative");
           console.log("Error", error.response.data.message);
         });
 

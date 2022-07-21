@@ -1,11 +1,14 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineAsyncComponent } from "vue";
 
 import useCliente from "../composables/useCliente";
 import useTickets from "../composables/useTickets";
 import PieChartVue from "src/components/charts/PieChart.vue";
 import CustomDataTable from "../components/charts/CustomDataTable.vue";
 
+const Pie = defineAsyncComponent(() => {
+  import("../components/charts/PieChart.vue");
+});
 const {
   getAllClientes,
   // createCliente,
@@ -109,6 +112,7 @@ onMounted(() => {
   <q-page padding>
     <div class="flex justify-center">
       <CustomDataTable />
+      <Pie />
       <PieChartVue />
     </div>
 

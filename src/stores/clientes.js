@@ -13,10 +13,16 @@ export const useClientesStore = defineStore("clientes", {
   getters: {
     getClientes: (state) => state.clientes,
     getOnlyRuts: (state) => state.clientes.map((c) => c.rut_cliente),
+    getClientesSelect: (state) =>
+      state.clientes.map((m) => ({
+        ...m,
+        label: `${m.nombre_cliente} ${m.appat_cliente} ${m.apmat_cliente}`,
+        value: m.rut_cliente,
+      })),
   },
   actions: {
     async getAllClientes() {
-      const token = auth.getToken;
+      const token = await auth.getToken;
       if (token == "") {
         return this.clientes;
       }
@@ -29,7 +35,7 @@ export const useClientesStore = defineStore("clientes", {
       this.clientes = data;
     },
     async getClienteById(rut_colaborador) {
-      const token = auth.getToken;
+      const token = await auth.getToken;
       const { data } = await api.get(`/clientes/${rut_colaborador}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -37,7 +43,7 @@ export const useClientesStore = defineStore("clientes", {
       this.cliente = data;
     },
     async createCliente(data) {
-      const token = auth.getToken;
+      const token = await auth.getToken;
       await api
         .post("/clientes/add/", data, {
           headers: { Authorization: `Bearer ${token}` },
@@ -72,7 +78,7 @@ export const useClientesStore = defineStore("clientes", {
       this.getAllClientes();
     },
     async updateCliente(rut_colaborador, data) {
-      const token = auth.getToken;
+      const token = await auth.getToken;
       console.log("updateCliente actions:", rut_colaborador, data);
       await api
         .put(`clientes/update/${rut_colaborador}`, data, {
@@ -107,7 +113,7 @@ export const useClientesStore = defineStore("clientes", {
       this.getAllClientes();
     },
     async deleteCliente(rut_colaborador) {
-      const token = auth.getToken;
+      const token = await auth.getToken;
       await api
         .delete(`clientes/delete/${rut_colaborador}`, {
           headers: { Authorization: `Bearer ${token}` },

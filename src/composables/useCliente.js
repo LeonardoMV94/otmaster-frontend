@@ -41,6 +41,7 @@ const useCliente = () => {
     getClienteByRut,
     getClientes: computed(() => store.getClientes),
     getOnlyRuts: computed(() => store.getOnlyRuts),
+    getClientesSelect: computed(() => store.getClientesSelect),
   };
 };
 

@@ -1,5 +1,8 @@
 <script setup>
-import TableEdit from "components/table/TableEdit.vue";
+import { defineAsyncComponent } from "vue";
+const TableEdit = defineAsyncComponent(() =>
+  import("components/table/TableEdit.vue")
+);
 </script>
 
 <template>

@@ -15,6 +15,12 @@ export const useDispositivosStore = defineStore("Dispositivos", {
     getDispositivo: (state) => state.dispositivo,
     getOnlyIdDispositivos: (state) =>
       state.dispositivos.map((x) => x.id_dispositivo),
+    getDispositivosSelect: (state) =>
+      state.dispositivos.map((m) => ({
+        ...m,
+        label: `${m.num_serie_dispositivo} - ${m.marcas.nombre_marca} ${m.modelo}`,
+        value: m.id_dispositivo,
+      })),
   },
   actions: {
     async getAllDispositivos() {

@@ -1,6 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, onActivated } from "vue";
-import FormTicket from "components/FormTicket.vue";
+import { ref, onBeforeMount, onActivated, defineAsyncComponent } from "vue";
 import { createNotify } from "../../utils/Notifications";
 
 import useAuth from "../../composables/useAuth";
@@ -8,10 +7,14 @@ import useTicket from "../../composables/useTickets";
 import useCliente from "../../composables/useCliente";
 import useColaborador from "../../composables/useColaboradores";
 
+const FormTicket = defineAsyncComponent(() =>
+  import("components/FormTicket.vue")
+);
+
 const { isAdmin } = useAuth();
 const { getClienteByRut } = useCliente();
 const { getAllColaboradores, getColabByRut } = useColaborador();
-const { getAllTickets, deleteTicket, getTickets } = useTicket();
+const { getAllTickets, deleteTicket, getTickets, updateTicket } = useTicket();
 
 let showDialog = ref(false);
 let confirm = ref(false);
@@ -57,21 +60,21 @@ const columns = [
   {
     name: "problema_ticket",
     align: "center",
-    label: "Problema",
+    label: "Problema (Editable)",
     field: "problemaTicket",
     sortable: true,
   },
   {
     name: "diagnostico_ticket",
     align: "center",
-    label: "Dignóstico",
+    label: "Dignóstico (Editable)",
     field: "diagnosticoTicket",
     sortable: true,
   },
   {
     name: "resolucion_ticket",
     align: "center",
-    label: "Resolución",
+    label: "Resolución (Editable)",
     field: "resolucionTicket",
     sortable: true,
   },
@@ -83,18 +86,40 @@ const columns = [
     sortable: true,
   },
   {
+    name: "items.repuesto",
+    align: "center",
+    label: "Repuestos",
+    field: "items.repuesto",
+    sortable: true,
+  },
+  {
     name: "acciones",
     label: "Acciones",
     field: "acciones",
     align: "center",
   },
 ];
-
-// const rows = getTickets.value;
-// const editarItem = (value) => {
-//   console.log("editar", value);
-// };
-
+const editarItemProblema = async (id, value) => {
+  const proObj = {
+    problema_ticket: value,
+  };
+  console.log("editarItemProblema", id, proObj);
+  await updateTicket(id, proObj);
+};
+const editarItemDiagnostico = async (id, value) => {
+  const diagObj = {
+    diagnostico_ticket: value,
+  };
+  console.log("editarItemDiagnostico", id, diagObj);
+  await updateTicket(id, diagObj);
+};
+const editarItemResolucion = async (id, value) => {
+  const resObj = {
+    resolucion_ticket: value,
+  };
+  console.log("editarItemResolucion", id, resObj);
+  await updateTicket(id, resObj);
+};
 const deleteItem = async (value) => {
   if (isAdmin) {
     console.log("delete permitido", value);
@@ -127,6 +152,7 @@ const estados = [
     color: "red",
   },
 ];
+
 const init = async () => {
   await getAllTickets();
   await getAllColaboradores();
@@ -183,14 +209,7 @@ onActivated(async () => {
           @click="changeShow"
         ></q-btn>
         <q-space />
-        <q-input
-          v-model="filter"
-          borderless
-          outlined
-          dense
-          debounce="300"
-          color="primary"
-        >
+        <q-input v-model="filter" outlined dense debounce="300" color="primary">
           <template #append>
             <q-icon name="search" />
           </template>
@@ -239,15 +258,17 @@ onActivated(async () => {
             <q-popup-edit
               v-slot="scope"
               v-model="props.row.problema_ticket"
-              title="Editar problema"
-              auto-save
+              title="Editar Problema"
+              buttons
+              persistent
+              @save="(val) => editarItemProblema(props.row.id_ticket, val)"
             >
               <q-input
                 v-model="scope.value"
-                dense
+                type="textarea"
                 autofocus
                 counter
-                @keyup.enter="scope.set"
+                @keyup.enter.stop
               />
             </q-popup-edit>
           </q-td>
@@ -257,12 +278,14 @@ onActivated(async () => {
               v-slot="scope"
               v-model="props.row.diagnostico_ticket"
               title="Editar diagnóstico"
-              auto-save
+              buttons
+              persistent
+              @save="(val) => editarItemDiagnostico(props.row.id_ticket, val)"
             >
               <q-input
                 v-model="scope.value"
-                dense
                 autofocus
+                type="textarea"
                 counter
                 @keyup.enter="scope.set"
               />
@@ -274,12 +297,14 @@ onActivated(async () => {
               v-slot="scope"
               v-model="props.row.resolucion_ticket"
               title="Editar resolución"
-              auto-save
+              buttons
+              persistent
+              @save="(val) => editarItemResolucion(props.row.id_ticket, val)"
             >
               <q-input
                 v-model="scope.value"
-                dense
                 autofocus
+                type="textarea"
                 counter
                 @keyup.enter="scope.set"
               />
@@ -289,6 +314,9 @@ onActivated(async () => {
             <q-badge :color="estados[props.row.estado_ticket - 1].color">
               {{ estados[props.row.estado_ticket - 1].estado }}
             </q-badge>
+          </q-td>
+          <q-td key="items.repuesto" :props="props">
+            {{ props.row.items.map(r => r.repuesto) }}
           </q-td>
           <q-td key="acciones" :props="props">
             <q-btn
