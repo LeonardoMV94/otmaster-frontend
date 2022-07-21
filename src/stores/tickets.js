@@ -62,6 +62,27 @@ export const useTicketsStore = defineStore("tickets", {
       console.log("getEstados: ", data);
       this.estados = data;
     },
+    async createMultiplesItems(id_ticket, data) {
+      const token = await auth.getToken;
+      await api
+        .post(`/tickets/add-multiple-items/${id_ticket}`, data, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          console.log(response.data);
+          createNotify(
+            `Repuestos de ticket ${id_ticket} actualizados exitosamente!`,
+            "positive"
+          );
+          console.log(response);
+        })
+        .catch((error) => {
+          createNotify(error.response.data, "negative");
+          console.log("Error", error.response.data.message);
+        });
+
+      this.getAllTickets();
+    },
     async createTicket(data) {
       const token = await auth.getToken;
       await api

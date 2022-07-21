@@ -34,6 +34,7 @@ const useRepuestos = () => {
     updateRepuesto,
     deleteRepuesto,
     getRepuestos: computed(() => store.getRepuestos),
+    getRepuestosSelects: computed(() => store.getRepuestosSelect),
   };
 };
 

@@ -11,6 +11,12 @@ export const useRepuestosStore = defineStore("repuestos", {
   }),
   getters: {
     getRepuestos: (state) => state.repuestos,
+    getRepuestosSelect: (state) =>
+      state.repuestos.map((m) => ({
+        ...m,
+        label: m.repuesto,
+        value: m.id_repuesto,
+      })),
   },
   actions: {
     async getAllRepuestos() {

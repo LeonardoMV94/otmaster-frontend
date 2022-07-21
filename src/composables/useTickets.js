@@ -24,6 +24,10 @@ const useTicket = () => {
     await store.createTicket(TicketObj);
   };
 
+  const createMultipleitems = async (id_ticket, data) => {
+    await store.createMultiplesItems(id_ticket, data);
+  };
+
   const updateTicket = async (id_ticket, updateDis) => {
     console.log("updateTicket", id_ticket, updateDis);
     await store.updateTicket(id_ticket, updateDis);
@@ -42,6 +46,7 @@ const useTicket = () => {
     deleteTicket,
     getAllEstados,
     getAllCountRepuestos,
+    createMultipleitems,
     getTickets: computed(() => store.getTickets),
     getTicket: computed(() => store.getTicket),
     getEstadosTicket: computed(() => store.getEstados),

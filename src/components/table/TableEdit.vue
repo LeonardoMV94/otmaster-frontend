@@ -6,6 +6,7 @@ import useAuth from "../../composables/useAuth";
 import useTicket from "../../composables/useTickets";
 import useCliente from "../../composables/useCliente";
 import useColaborador from "../../composables/useColaboradores";
+import useRepuestos from "src/composables/useRepuestos";
 
 const FormTicket = defineAsyncComponent(() =>
   import("components/FormTicket.vue")
@@ -14,6 +15,7 @@ const FormTicket = defineAsyncComponent(() =>
 const { isAdmin } = useAuth();
 const { getClienteByRut } = useCliente();
 const { getAllColaboradores, getColabByRut } = useColaborador();
+const { getAllRepuestos, getRepuestosSelects } = useRepuestos();
 const {
   getAllTickets,
   deleteTicket,
@@ -21,6 +23,7 @@ const {
   updateTicket,
   getAllEstados,
   getEstadosSelects,
+  createMultipleitems,
 } = useTicket();
 
 let showDialog = ref(false);
@@ -134,6 +137,16 @@ const editarItemEstado = async (id, value) => {
   console.log("editarItemResolucion", id, esObj);
   await updateTicket(id, esObj);
 };
+
+const editarItemsRepuestos = async (id, data) => {
+  const arr = JSON.parse(JSON.stringify(data));
+  const obj = arr.map((o) => ({
+    repuestosIdRepuesto: o.id_repuesto,
+    ticketsIdTicket: id,
+  }));
+  console.log("editarItemsRepuestos", id, obj);
+  await createMultipleitems(id, obj);
+};
 const deleteItem = async (value) => {
   if (isAdmin) {
     console.log("delete permitido", value);
@@ -171,6 +184,7 @@ const init = async () => {
   await getAllTickets();
   await getAllColaboradores();
   await getAllEstados();
+  await getAllRepuestos();
 };
 onBeforeMount(async () => {
   await init();
@@ -358,7 +372,38 @@ onActivated(async () => {
             </q-badge>
           </q-td>
           <q-td key="items.repuesto" :props="props">
-            {{ props.row.items.map((r) => r.repuesto) }}
+            <template v-for="repuesto in props.row.items" :key="repuesto">
+              <q-badge outline color="primary">
+                {{ repuesto.repuesto }}</q-badge
+              >
+              <br />
+            </template>
+            <q-popup-edit
+              v-slot="scope"
+              v-model="props.items"
+              title="Editar repuestos"
+              buttons
+              persistent
+              @save="(val) => editarItemsRepuestos(props.row.id_ticket, val)"
+            >
+              <q-select
+                v-model="scope.value"
+                outlined
+                label-color="primary"
+                input-debounce="0"
+                multiple
+                map-options
+                behavior="menu"
+                :options="getRepuestosSelects"
+                ><template #no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No hay repuestos
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+            </q-popup-edit>
           </q-td>
           <q-td key="acciones" :props="props">
             <q-btn
