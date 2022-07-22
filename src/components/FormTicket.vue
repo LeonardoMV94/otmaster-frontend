@@ -34,6 +34,7 @@ const rut_colaborador = ref(null);
 
 const id_dispositivo = ref(null);
 const optionsdis = getDispositivosSelect.value;
+console.log("####sdasdasd: ", optionsdis);
 const problema_ticket = ref(null);
 // const resolucion_ticket = ref(null);
 // const diagnostico_ticket = ref(null);
@@ -78,6 +79,8 @@ const procesarFormulario = async () => {
               use-input
               input-debounce="0"
               label="Elija un cliente"
+              map-options
+              emit-value
               :options="optionscli"
               behavior="menu"
               @filter="filterFn"
@@ -102,6 +105,8 @@ const procesarFormulario = async () => {
               outlined
               use-input
               input-debounce="0"
+              map-options
+              emit-value
               label="Colaborador que atiende"
               :options="optionscol"
               behavior="menu"
@@ -125,6 +130,8 @@ const procesarFormulario = async () => {
               v-model="id_dispositivo"
               outlined
               use-input
+              map-options
+              emit-value
               input-debounce="0"
               label="Dispositivo a reparar"
               :options="optionsdis"
